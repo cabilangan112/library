@@ -10,10 +10,10 @@ from django.contrib.auth.models import (
 )
 
 YEAR = (
-    ('1st', '1st'),
-    ('2nd', '2nd'),
-    ('3rd', '3rd'),
-    ('4rt', '4rt'),
+    ('1st', 'Firs Year'),
+    ('2nd', 'Second Year'),
+    ('3rd', 'Third Year'),
+    ('4rt', 'Fourth Year'),
 )
 class Course(models.Model):
     course_code        = models.CharField(max_length=100)
@@ -46,8 +46,10 @@ class User(AbstractBaseUser):
     student_id   = models.CharField(max_length=80)
     first_name   = models.CharField(max_length=80)
     last_name    = models.CharField(max_length=80)
+    course       = models.ForeignKey(Course, on_delete = models.CASCADE)
     Year         = models.CharField(max_length=6, choices=YEAR, blank=True, default=True)
- 
+    department   = models.ForeignKey(Department, on_delete = models.CASCADE)
+
     is_staff 	 = models.BooleanField(default=False)
     is_active 	 = models.BooleanField(default=False)
 
