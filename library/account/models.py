@@ -4,7 +4,6 @@ from django.urls import reverse
 import uuid
 
 from .manager import UserManager
-
 from django.contrib.auth.models import (
      BaseUserManager, AbstractBaseUser,PermissionsMixin
 )
@@ -43,7 +42,7 @@ class User(AbstractBaseUser):
     """ user model
     """
     email        = models.EmailField(max_length=500, unique=True)
-    student_id   = models.CharField(max_length=80)
+    id_number  = models.CharField(max_length=80)
     first_name   = models.CharField(max_length=80)
     last_name    = models.CharField(max_length=80)
     course       = models.ForeignKey(Course, on_delete = models.CASCADE)
@@ -60,11 +59,7 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ("first_name", "last_name")
 
     objects = UserManager()
-
-    USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ("first_name", "last_name")
-
-    objects = UserManager()
+ 
 
     def __str__(self):
         return f"{self.email}"
