@@ -39,7 +39,5 @@ class BookModelForm(forms.ModelForm):
         )
         book.save()
 
-    class Meta:
-        model = Book
-        fields = ['due_back']
+class BookInstanceModelForm(forms.ModelForm):
  
