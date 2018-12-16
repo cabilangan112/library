@@ -81,20 +81,20 @@ class EditProfileView(LoginRequiredMixin, generic.TemplateView):
     Edit the currently logged in user's profile
     """
     login_url = 'login'
-    template_name = 'post_form.html'
+    template_name = 'profile-edit.html'
 
-    def get(self, *args, **kwargs):
+    def get(self, id_number, *args, **kwargs):
         title = 'Edit Profile'
         user = self.request.user
         users = User.objects.all()
-        instance = get_object_or_404(User, user=user)
+ 
+        instance = get_object_or_404(User,id_number=id_number, user=user)
 
         initial_data = {
             'email':user.email,
             'first_name':user.first_name,
             'last_name':user.last_name,
             'Year':user.Year,
- 
         }
 
         form = EditProfileForm(
@@ -122,10 +122,8 @@ class EditProfileView(LoginRequiredMixin, generic.TemplateView):
             'email':user.email,
             'first_name':user.first_name,
             'last_name':user.last_name,
-            'Year':user.Year,
- 
+            'Year':user.Year, 
         }
-
         form = EditProfileForm(
             self.request.POST or None, 
             initial=initial_data,
@@ -150,13 +148,13 @@ class EditPassword(LoginRequiredMixin, generic.TemplateView):
     Edit the currently logged in user's password
     """    
     login_url = 'login'
-    template_name='post_form.html'
+    template_name='password-edit.html'
 
-    def get(self, *args, **kwargs):
+    def get(self, id_number, *args, **kwargs):
         title = 'Edit Password'
         user = self.request.user
         users = User.objects.all()
-        instance = get_object_or_404(User, user=user)
+        instance = get_object_or_404(User, id_number=id_number, user=user)
 
         form = EditPasswordForm(
             self.request.POST or None
@@ -170,7 +168,6 @@ class EditPassword(LoginRequiredMixin, generic.TemplateView):
         }
 
         return render(self.request, self.template_name, context)
-
 
     def post(self, *args, **kwargs):
         title = 'Edit Password'

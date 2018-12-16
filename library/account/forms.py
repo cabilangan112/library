@@ -120,7 +120,6 @@ class UserRegisterForm(forms.Form):
         user.set_password(self.cleaned_data["password1"])
         user.is_active = True
 
-
 class EditPasswordForm(forms.Form):
     """
     Form for the currently logged in user if he/she wants to edit
@@ -143,8 +142,6 @@ class EditPasswordForm(forms.Form):
         if password2 != password:
             raise forms.ValidationError('Passwords must match')
 
-
-
 class EditProfileForm(forms.Form):
     """
     Form for the currently logged in user if he/she wants to edit
@@ -154,19 +151,16 @@ class EditProfileForm(forms.Form):
     first_name = forms.CharField(max_length=20)
     last_name = forms.CharField(max_length=20)
     Year       = forms.ChoiceField(choices=YEAR)
- 
 
     def save(self, user=None):
         data = self.cleaned_data
         instance = get_object_or_404(Profile, user=user)
-
 
         user.email = data['email']
         user.first_name = data['first_name']
         user.last_name = data['last_name']
         user.Year = data['Year']
         user.save() 
- 
 
         def clean_email(self):
             email = self.data.get('email')
