@@ -30,6 +30,8 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
  
+ #Book
+
 class BooksView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
@@ -101,6 +103,8 @@ def renew_book_librarian(request, pk):
 
     return render(request, 'catalog/book_renew_librarian.html', context)
 
+# Author
+
 class AuthorView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
@@ -152,6 +156,8 @@ def author_edit(request,last_name):
         form = BookModelForm(instance=post)
     return render(request, 'edit-author.html', {'form': form})
 
+#Genre
+
 class GenreView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
@@ -201,4 +207,4 @@ def Genre_edit(request,name):
             return redirect('/posts', name=genre.name)
     else:
         form = BookModelForm(instance=post)
-    return render(request, 'edit-author.html', {'form': form})
+    return render(request, 'edit-genre.html', {'form': form})
