@@ -61,7 +61,7 @@ class BookCreateView(View):
         if form.is_valid():
             post = form.save(commit=False)
             post.save()
-            return redirect('personal-info-detail')
+            return redirect('/')
         else:
             form = BookModelForm()
         context = {
@@ -151,7 +151,7 @@ def author_edit(request,last_name):
                 post = form.save(commit=False)
  
                 post.save()
-            return redirect('/posts', last_name=author.last_name)
+            return redirect('/', last_name=author.last_name)
     else:
         form = BookModelForm(instance=post)
     return render(request, 'edit-author.html', {'form': form})
