@@ -47,7 +47,7 @@ class LoginView(TemplateView):
 		if form.is_valid():
 			user = form.save()
 			login(self.request, user)
-			return redirect("/")
+			return redirect("home")
 
 		return render(self.request, self.template_name, context)
 

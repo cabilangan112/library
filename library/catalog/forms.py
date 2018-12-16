@@ -68,3 +68,12 @@ class AuthorModelForm(forms.ModelForm):
         )
 
         book.save()
+
+
+class GenreModelForm(forms.ModelForm):
+
+    class Meta:
+        model = Genre
+        fields = [
+            'name'
+            ]

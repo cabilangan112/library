@@ -5,5 +5,6 @@ app_name='catalog'
 
 
 urlpatterns = [
-
+    path('', views.BooksView.as_view(), name='book'),
+    path('<title>', views.BookDetailView.as_view(), name='book'),
 ]

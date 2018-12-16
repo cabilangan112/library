@@ -181,7 +181,7 @@ p {
 }
 .hero {
   position: relative;
-  background: url(http://www.philippefercha.com/cd/toggle-menu-bg.jpg) no-repeat center center fixed;
+  background: url(img/back.jpg) no-repeat center center fixed;
  
   text-align: center;
   color: #fff;
@@ -386,4 +386,4 @@ body {margin:0;font-family:Arial}
   }
 
 }
-
+ 

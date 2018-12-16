@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.db.models import Q
 import uuid
 
 LOAN_STATUS = (
@@ -7,6 +8,31 @@ LOAN_STATUS = (
     ('a', 'Available'),
     ('r', 'Reserved'),
 )
+
+class BookQuerySet(models.query.QuerySet):
+    def search(self,query): 
+        if query:
+            query = query.strip()
+            return self.filter(
+                Q(book__title__icontains=query)|
+                Q(book__author__icontains=query)|
+                Q(book__isbn__icontains=query)|
+                Q(book__genre__iexact=query)|
+                Q(author__first_name__icontains=query)|
+                Q(author__last_name__iexact=query)|
+                Q(author__date_of_birth__icontains=query)|
+                Q(author__date_of_death__iexact=query)
+                ).distinct()
+        return self
+
+#search
+class BookManager(models.Manager):
+    def get_queryset(self):
+        return BookQuerySet(self.model, using=self._db)
+
+    def search(self, query):
+        return self.get_queryset().search(query)
+
 class Genre(models.Model):
     name = models.CharField(max_length=200)
     
@@ -14,12 +40,14 @@ class Genre(models.Model):
         return self.name
 
 class Book(models.Model):
-    title = models.CharField(max_length=200)
-    author = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
+    title   = models.CharField(max_length=200)
+    author  = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
     summary = models.TextField(max_length=1000)
-    isbn = models.CharField('ISBN', max_length=13)
-    genre = models.ManyToManyField(Genre)
-    
+    isbn    = models.CharField('ISBN', max_length=13)
+    genre   = models.ManyToManyField(Genre)
+
+    objects = BookManager()
+
     def __str__(self):
         return self.title
     
@@ -39,6 +67,9 @@ class BookInstance(models.Model):
 
     def __str__(self):
         return f'{self.id} ({self.book.title})'
+
+    class Meta:
+        permissions = (("can_mark_returned", "Set book as returned"),)  
 
 class Author(models.Model):
     first_name = models.CharField(max_length=100)

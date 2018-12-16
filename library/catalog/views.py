@@ -7,24 +7,12 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Book, Author, BookInstance, Genre
-from .forms import RenewBookModelForm
+from .forms import RenewBookModelForm,BookModelForm,AuthorModelForm,GenreModelForm
 from django.views.generic.base import TemplateView,View
 
 
 class HomeView(TemplateView):
     template_name = 'home.html'
-
-class BooksView(View):
-    def get(self, request, *args, **kwargs):
-        book = Book.objects.all()
-        context = {'book':book,}
-        return render(request, "catalog/book_list.html", context)
-
-class BookDetailView(View):
-    def get(self, request, title, *args, **kwargs):
-        book = get_object_or_404(Book, title=title)
-        context = {'book':book,}
-        return render(request, "catalog/book_detail.html", context)
 
 def index(request):
     num_books = Book.objects.all().count()
@@ -42,6 +30,58 @@ def index(request):
     # Render the HTML template index.html with the data in the context variable
     return render(request, 'index.html', context=context)
  
+class BooksView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('q')
+        book = Book.objects.all().order_by("-updated").search(query)
+
+        if book.exists():
+            return render(request, "catalog/book_list.html",{'book':book})
+        return render(request, "catalog/book_list.html",{'book':book})
+
+class BookDetailView(View):
+    def get(self, request, title, *args, **kwargs):
+        book = get_object_or_404(Book, title=title)
+        context = {'book':book,}
+        return render(request, "catalog/book_detail.html", context)
+
+class BookCreateView(View):
+    form_class = BookModelForm
+    initial = {'key':'value'}
+    template_name = 'catalog/book-form.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('personal-info-detail')
+        else:
+            form = BookModelForm()
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+def book_edit(request,title):
+    post = get_object_or_404(Book,title=title)
+    if request.method == "POST":
+        form = BookModelForm(request.POST, instance=post)
+        if posts.user == request.user: 
+            if form.is_valid():           
+                post = form.save(commit=False)
+ 
+                post.save()
+            return redirect('/posts', title=post.title)
+    else:
+        form = BookModelForm(instance=post)
+    return render(request, 'edit-book.html', {'form': form})
+
+
 def renew_book_librarian(request, pk):
     book_instance = get_object_or_404(BookInstance, pk=pk)
     if request.method == 'POST':
@@ -60,3 +100,105 @@ def renew_book_librarian(request, pk):
     }
 
     return render(request, 'catalog/book_renew_librarian.html', context)
+
+class AuthorView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('q')
+        author = Author.objects.all().order_by("-updated").search(query)
+
+        if author.exists():
+            return render(request, "catalog/author_list.html",{'author':author})
+        return render(request, "catalog/author_list.html",{'author':author})
+
+class AuthorDetailView(View):
+    def get(self, request, last_name, *args, **kwargs):
+        author = get_object_or_404(Author, last_name=last_name)
+        context = {'author':author,}
+        return render(request, "catalog/author_detail.html", context)
+
+class AuthorCreateView(View):
+    form_class = AuthorModelForm
+    initial = {'key':'value'}
+    template_name = 'catalog/author-form.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('/')
+        else:
+            form = AuthorModelForm()
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+def author_edit(request,last_name):
+    author = get_object_or_404(Author,last_name=last_name)
+    if request.method == "POST":
+        form = BookModelForm(request.POST, instance=post)
+        if posts.user == request.user: 
+            if form.is_valid():           
+                post = form.save(commit=False)
+ 
+                post.save()
+            return redirect('/posts', last_name=author.last_name)
+    else:
+        form = BookModelForm(instance=post)
+    return render(request, 'edit-author.html', {'form': form})
+
+class GenreView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('q')
+        genre = Genre.objects.all().order_by("-updated").search(query)
+
+        if book.exists():
+            return render(request, "catalog/genre_list.html",{'genre':genre})
+        return render(request, "catalog/genre_list.html",{'genre':genre})
+
+class GenreDetailView(View):
+    def get(self, request, name, *args, **kwargs):
+        genre = get_object_or_404(Genre, name=name)
+        context = {'genre':genre,}
+        return render(request, "catalog/Genre_detail.html", context)
+
+class GenreCreateView(View):
+    form_class = GenreModelForm
+    initial = {'key':'value'}
+    template_name = 'catalog/author-form.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.save()
+            return redirect('/')
+        else:
+            form = GenreModelForm()
+        context = {
+            'form': form
+        }
+        return render(request, self.template_name, context)
+
+def Genre_edit(request,name):
+    genre = get_object_or_404(Genre,name=name)
+    if request.method == "POST":
+        form = BookModelForm(request.POST, instance=post)
+        if posts.user == request.user: 
+            if form.is_valid():           
+                post = form.save(commit=False)
+ 
+                post.save()
+            return redirect('/posts', name=genre.name)
+    else:
+        form = BookModelForm(instance=post)
+    return render(request, 'edit-author.html', {'form': form})
