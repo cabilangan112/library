@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView,View
+from django.shortcuts import get_object_or_404, redirect
 from .models import Course,Department
 from django.contrib.auth import (
 	authenticate,

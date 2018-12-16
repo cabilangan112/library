@@ -1,0 +1,1 @@
+var URL = {'login': '{% url "user:login" %}',};

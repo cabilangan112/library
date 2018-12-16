@@ -1,6 +1,7 @@
+from django import forms
 from django.forms import ModelForm
 from django.contrib.auth import get_user_model
-from .model import Genre,Book,BookInstance, Author
+from .models import Genre,Book,BookInstance, Author
 
 class RenewBookModelForm(ModelForm):
     def clean_due_back(self):
@@ -17,8 +18,8 @@ class RenewBookModelForm(ModelForm):
     class Meta:
         model  = BookInstance
         fields = ['due_back']
-        labels = {'due_back': _('Renewal date')}
-        help_texts = {'due_back': _('Enter a date between now and 4 weeks (default 3).')}
+        labels = {'due_back': ('Renewal date')}
+        help_texts = {'due_back': ('Enter a date between now and 4 weeks (default 3).')}
 
 class BookModelForm(forms.ModelForm):
     title   = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Title'}))
@@ -40,4 +41,30 @@ class BookModelForm(forms.ModelForm):
         book.save()
 
 class BookInstanceModelForm(forms.ModelForm):
- 
+
+    class Meta:
+        model = BookInstance
+        fields = [
+            'id',
+            'book',
+            'imprint',
+            'due_back',
+            ]
+
+class AuthorModelForm(forms.ModelForm):
+    first_name    = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Title'}))
+    last_name     = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Summary'}))
+    date_of_birth = forms.DateField(label='What is your birth date?', widget=forms.SelectDateWidget)
+    data_of_death = forms.DateField(label='Death', widget=forms.SelectDateWidget)
+
+    def save(self):
+        data = self.cleaned_data
+
+        book = Author(
+            first_name      = data['first_name'],
+            last_name       = data['last_name'],
+            date_of_birth   = data['date_of_birth'],
+            data_of_death   = data['data_of_death'], 
+        )
+
+        book.save()

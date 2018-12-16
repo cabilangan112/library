@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from account.views import LoginView, RegisterView
+from catalog.views import HomeView
 
 urlpatterns = [
+    path('', HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
     path('account/', include('account.urls', namespace='user')),
     path('books/', include('catalog.urls', namespace='books')),
@@ -25,3 +27,4 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('register/',RegisterView.as_view(), name='register'),
 ]
+
