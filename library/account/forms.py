@@ -66,6 +66,7 @@ class UserRegisterForm(forms.Form):
     Year       = forms.ChoiceField(choices=YEAR)
     password1 = forms.CharField(label='Password',min_length=8, widget=forms.PasswordInput(attrs={'placeholder': 'Password'}), validators=[RegexValidator('^(\w+\d+|\d+\w+)+$', message="Password should be a combination of Alphabets and Numbers")])
     password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(attrs={'placeholder': 'Confirm Password'}))
+    
     def save(self):
         data = self.cleaned_data
 
@@ -74,12 +75,13 @@ class UserRegisterForm(forms.Form):
             id_number  = data['id_number'],
             first_name = data['first_name'],
             last_name  = data['last_name'],
+            course     = data['course'], 
             Year       = data['Year'],
-            password1  = data['password'],
-            password2  = data['password'],
+            department = data['department'],
 
         )
-        user.set_password(user.password)
+        user.set_password(self.cleaned_data["password1"])
+        user.is_active = True
         user.save()
 
         return user
@@ -113,12 +115,7 @@ class UserRegisterForm(forms.Form):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Passwords don't match")
         return password2
-    
-    def save(self, commit=True):
-        #Save the provided password in hashed format
-        user = super(RegisterForm, self).save(commit=False)
-        user.set_password(self.cleaned_data["password1"])
-        user.is_active = True
+
 
 class EditPasswordForm(forms.Form):
     """

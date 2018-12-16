@@ -51,7 +51,7 @@ class User(AbstractBaseUser):
     department   = models.ForeignKey(Department, on_delete = models.CASCADE)
 
     is_staff 	 = models.BooleanField(default=False)
-    is_active 	 = models.BooleanField(default=False)
+    is_active 	 = models.BooleanField(default=True)
 
     date_joined  = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
