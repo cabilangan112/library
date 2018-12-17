@@ -1,4 +1,11 @@
- 
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NDMC Library | Login</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+</head>
+<body>
 
 {% block content %}
 {% if form.errors %}
@@ -47,3 +54,6 @@
   </div>
 </section>
 {% endblock %}
+</body>
+</html>
+

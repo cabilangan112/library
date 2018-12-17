@@ -17,15 +17,14 @@ class BookQuerySet(models.query.QuerySet):
                 Q(book__title__icontains=query)|
                 Q(book__author__icontains=query)|
                 Q(book__isbn__icontains=query)|
-                Q(book__genre__iexact=query)|
+                Q(book__genre__name__iexact=query)|
                 Q(author__first_name__icontains=query)|
                 Q(author__last_name__iexact=query)|
                 Q(author__date_of_birth__icontains=query)|
-                Q(author__date_of_death__iexact=query)
+                Q(author__date_of_death__iexact=query)                
                 ).distinct()
         return self
-
-#search
+ 
 class BookManager(models.Manager):
     def get_queryset(self):
         return BookQuerySet(self.model, using=self._db)

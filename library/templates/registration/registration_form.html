@@ -1,92 +1,101 @@
-{% block content %}
-{% if form.errors %}
-  <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
-  {% for field in form %}
-    {{ field.errors }}
-  {% endfor %}
-  </div>
-{% endif %}
-<section class="blog-content-area section-padding-0-100">
-  <div class="container">
-    <div class="row justify-content-center">
-      <!-- Blog Posts Area -->
-      <div class="col-12 col-lg-8">
-        <div class="blog-posts-area">
-          <!-- Leave A Comment -->
-          <div class="leave-comment-area clearfix">
-            <div class="comment-form">
-              <h4 class="headline">Register</h4>
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NDMC Library | Registration</title>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+  </head>
+  <body>
+  {% block content %}
+  {% if form.errors %}
+    <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
+    {% for field in form %}
+      {{ field.errors }}
+    {% endfor %}
+    </div>
+  {% endif %}
+  <section class="blog-content-area section-padding-0-100">
+    <div class="container">
+      <div class="row justify-content-center">
+        <!-- Blog Posts Area -->
+        <div class="col-12 col-lg-8">
+          <div class="blog-posts-area">
+            <!-- Leave A Comment -->
+            <div class="leave-comment-area clearfix">
+              <div class="comment-form">
+                <h4 class="headline">Register</h4>
 
-              <!-- Comment Form -->
-                <form method="post" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.id_number }}</td>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.last_name.label_tag }}</td>
-                      <td>{{ form.last_name }}</td>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.first_name.label_tag }}</td>
-                      <td>{{ form.first_name }}</td>
-                    </div>
-                  </div>
+                <!-- Comment Form -->
+                  <form method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                  <div class="row">
                     <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.course.label_tag }}</td>
-                      <td>{{ form.course }}</td>
+                      <div class="form-group">
+                        <td>{{ form.id_number }}</td>
+                      </div>
                     </div>
-                  </div>  
-                  <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.Year.label_tag }}</td>
-                      <td>{{ form.Year }}</td>
-                    </div>
-                  </div>
                     <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.department.label_tag }}</td>
-                      <td>{{ form.department }}</td>
+                      <div class="form-group">
+                        <td>{{ form.last_name.label_tag }}</td>
+                        <td>{{ form.last_name }}</td>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.email.label_tag }}</td>
-                      <td>{{ form.email }}</td>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.password1.label_tag }}</td>
-                      <td>{{ form.password1 }}</td>
-                    </div>
-                  </div>
                     <div class="col-12">
-                    <div class="form-group">
-                      <td>{{ form.password2.label_tag }}</td>
-                      <td>{{ form.password2 }}</td>
+                      <div class="form-group">
+                        <td>{{ form.first_name.label_tag }}</td>
+                        <td>{{ form.first_name }}</td>
+                      </div>
+                    </div>
+                      <div class="col-12">
+                      <div class="form-group">
+                        <td>{{ form.course.label_tag }}</td>
+                        <td>{{ form.course }}</td>
+                      </div>
+                    </div>  
+                    <div class="col-12">
+                      <div class="form-group">
+                        <td>{{ form.Year.label_tag }}</td>
+                        <td>{{ form.Year }}</td>
+                      </div>
+                    </div>
+                      <div class="col-12">
+                      <div class="form-group">
+                        <td>{{ form.department.label_tag }}</td>
+                        <td>{{ form.department }}</td>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <td>{{ form.email.label_tag }}</td>
+                        <td>{{ form.email }}</td>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-group">
+                        <td>{{ form.password1.label_tag }}</td>
+                        <td>{{ form.password1 }}</td>
+                      </div>
+                    </div>
+                      <div class="col-12">
+                      <div class="form-group">
+                        <td>{{ form.password2.label_tag }}</td>
+                        <td>{{ form.password2 }}</td>
+                      </div>
+                    </div>
+                    <div class="col-12">
+              <button type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
                     </div>
                   </div>
-                  <div class="col-12">
-            <button type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
-                  </div>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
- 
+  </section>
+  </body>
+</html>
 {% endblock %}
 
 

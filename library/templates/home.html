@@ -3,7 +3,7 @@
 <html>
   <head>
     <title>NDMC Library</title>
-    <link rel="shortcut icon" href="{% static 'logo.png' %}"/>
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
     <link type="text/css" rel="stylesheet" href="{% static 'css/user.css' %}"> 
     <link type="text/css" rel="stylesheet" href="{% static 'css/home.css' %}"> 
     <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}"> 
@@ -17,9 +17,9 @@
   <body>
     <div class="topnav" id="myTopnav">
       <a href="#home" class="active">Home</a>
-      <a href="#news">Books</a>
-      <a href="#contact">Contact</a>
-      <a href="#about">About</a>
+      <a href="{% url 'books:books' %}">Books</a>
+      <a href="{% url 'books:authors' %}">Authors</a>
+      <a href="{% url 'books:genres' %}">Genre</a>
       <nav class="main-nav">
         <div>
         {% if user.is_authenticated %}
@@ -27,14 +27,14 @@
             <a class="user">{{ user.email}}</a>
           {% endif %}
         {% else %}  
-          <li><a class="cd-signin" href="#0">Sign in</a></li>
+          <li><a class="cd-signin" href="{% url 'login' %}">Sign in</a></li>
         {% endif %}
         {% if user.is_authenticated %}
           {% if request.user.is_active %}
             <li><a class="cd-signup"  href="logout">Logout</a></li>
           {% endif %}
         {% else %}                     
-          <li><a class="cd-signup" href="#0">Sign up</a></li>
+          <li><a class="cd-signup" href="{% url 'register' %}">Sign up</a></li>
         {% endif %}
       </div>
       </nav>
@@ -46,7 +46,7 @@
         </div> 
       </header>
       <div class="hero">
-        <h1><span>I'm a cool</span><br>NDMC library</h1>
+        <h1><span>“Reading is essential for those who seek to rise above the ordinary.” </span><br>NDMC library</h1>
         <div class="mouse">
           <span></span>
         </div>
@@ -76,9 +76,9 @@
     <div class="footer-left">
       <h3>NDMC<span>Library</span></h3>
         <p class="footer-links">
-          <a href="#">Home</a>
+          <a href="">Home</a>
           ·
-          <a href="#">Books</a>
+          <a href="{% url 'books:books' %}">Books</a>
           ·
           <a href="#">Pricing</a>
           ·

@@ -108,11 +108,12 @@ def renew_book_librarian(request, pk):
 class AuthorView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
-        author = Author.objects.all().order_by("-updated").search(query)
+        author = Author.objects.all()
+        qs = Book.objects.all().order_by("-updated").search(query)
 
-        if author.exists():
-            return render(request, "catalog/author_list.html",{'author':author})
-        return render(request, "catalog/author_list.html",{'author':author})
+        if author and qs.exists():
+            return render(request, "catalog/author_list.html",{'author':qs})
+        return render(request, "catalog/author_list.html",{'author':qs})
 
 class AuthorDetailView(View):
     def get(self, request, last_name, *args, **kwargs):
@@ -161,11 +162,12 @@ def author_edit(request,last_name):
 class GenreView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
-        genre = Genre.objects.all().order_by("-updated").search(query)
-
-        if book.exists():
-            return render(request, "catalog/genre_list.html",{'genre':genre})
-        return render(request, "catalog/genre_list.html",{'genre':genre})
+        genre = Genre.objects.all()
+        qs = Book.objects.all().order_by("-updated").search(query)
+        
+        if genre and qs.exists():
+            return render(request, "catalog/genre_list.html",{'genre':qs})
+        return render(request, "catalog/genre_list.html",{'genre':qs})
 
 class GenreDetailView(View):
     def get(self, request, name, *args, **kwargs):

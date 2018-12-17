@@ -7,6 +7,7 @@ app_name='catalog'
 urlpatterns = [
 
 #Book
+    path('genres/', views.GenreView.as_view(), name='genres'),
 
     path('', views.BooksView.as_view(), name='books'),
     path('<title>', views.BookDetailView.as_view(), name='book'),
@@ -22,7 +23,6 @@ urlpatterns = [
 
 #Genre
 
-    path('genres', views.GenreView.as_view(), name='genres'),
     path('<name>', views.GenreDetailView.as_view(), name='genre'),
     path('<name>', views.book_edit, name='edit-genre'),
     path('genre/create/', views.GenreCreateView.as_view(), name='genre-create'),
