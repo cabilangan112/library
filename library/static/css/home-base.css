@@ -140,13 +140,7 @@ nav ul a {
   box-sizing: border-box;
 }
 
-body {
-  color: #8f8f8f;
-  background: #b2ba7e;
-  font-family: "Cardo", serif;
-  font-weight: 300;
-  -webkit-font-smoothing: antialiased;
-}
+ 
 
 a {
   text-decoration: none;

@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NDMC Library</title>
+    <title>NDMC Library | Home Page</title>
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
     <link type="text/css" rel="stylesheet" href="{% static 'css/user.css' %}"> 
     <link type="text/css" rel="stylesheet" href="{% static 'css/home.css' %}"> 
@@ -16,7 +16,7 @@
   </head>
   <body>
     <div class="topnav" id="myTopnav">
-      <a href="#home" class="active">Home</a>
+      <a href="{% url 'home' %}" class="active">Home</a>
       <a href="{% url 'books:books' %}">Books</a>
       <a href="{% url 'books:authors' %}">Authors</a>
       <a href="{% url 'books:genres' %}">Genre</a>

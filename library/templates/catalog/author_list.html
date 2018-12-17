@@ -1,11 +1,15 @@
+{% include 'base.html'%}
 {% load static from staticfiles %}
+{% block content %} 
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NDMC Library | Authors List </title>
-		<link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+ 		<title>NDMC Library | Author List</title>
 	</head>
 	<body>
 
 	</body>
 </html>
+{% include 'footer.html'%}
+{% endblock content %}
+ 
