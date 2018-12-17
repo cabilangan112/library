@@ -44,8 +44,7 @@ class Book(models.Model):
     summary = models.TextField(max_length=1000)
     isbn    = models.CharField('ISBN', max_length=13)
     genre   = models.ManyToManyField(Genre)
-    date_created       = models.DateTimeField(auto_now_add=True)
-    date_modified      = models.DateTimeField(auto_now=True)
+ 
     objects = BookManager()
 
     def __str__(self):

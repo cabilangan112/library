@@ -1,3 +1,4 @@
+{% include 'base.html'%}
 {% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
@@ -24,7 +25,6 @@
             <div class="leave-comment-area clearfix">
               <div class="comment-form">
                 <h4 class="headline">Register</h4>
-
                 <!-- Comment Form -->
                   <form method="post" enctype="multipart/form-data">
                   {% csrf_token %}
@@ -83,7 +83,7 @@
                       </div>
                     </div>
                     <div class="col-12">
-              <button type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
+                    <button type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
                     </div>
                   </div>
                 </form>
@@ -95,6 +95,7 @@
     </div>
   </section>
   </body>
+{% include 'footer.html'%}
 </html>
 {% endblock %}
 
