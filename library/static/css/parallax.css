@@ -1,0 +1,30 @@
+.float-right{
+  text-align: right;
+}
+.center{
+  text-align: center;
+}
+.parallax-caption {
+  z-index: 10;
+  color: white;
+  margin-top: 200px;
+}
+.parallax1 {
+  /* Set a specific height */
+  min-height: 480px; 
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-bottom: -39.5px;
+}
+.parallax {
+  /* Set a specific height */
+  min-height: 480px; 
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}

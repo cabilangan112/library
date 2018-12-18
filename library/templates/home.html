@@ -1,87 +1,69 @@
-{% load static from staticfiles %}
+{% load staticfiles %}
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>NDMC Library | Home Page</title>
+<html lang=en>
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/docs/3.3/favicon.ico">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> 
-    <link type="text/css" rel="stylesheet" href="{% static 'css/user.css' %}"> 
-    <link type="text/css" rel="stylesheet" href="{% static 'css/home.css' %}"> 
-    <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}"> 
-    <link type="text/css" rel="stylesheet" href="{% static 'css/footer.css' %}"> 
-    <script type="text/javascript" rel="stylesheet" href="{% static 'js/bootstrap,min.js' %}"> </script>
-    <script type="text/javascript" rel="stylesheet" href="{% static 'js/home.js' %}"> </script>
-    <script type="text/javascript" rel="stylesheet" href="{% static 'js/main.js' %}"> </script>
-    <script type="text/javascript" rel="stylesheet" href="{% static 'js/classie.js' %}"> </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{% static 'css/back-to-top.css' %}">
-
+    <title>NDMC Library</title>
+    {% include 'snippets/css.html'%}
   </head>
   <body>
-    <div class="topnav" id="myTopnav">
-      <a href="{% url 'home' %}" class="active">Home</a>
-      <a href="{% url 'books:books' %}">Books</a>
-      <a href="{% url 'books:authors' %}">Authors</a>
-      <a href="{% url 'books:genres' %}">Genre</a>
-      <nav class="main-nav">
-        <div>
-        {% if user.is_authenticated %}
-          {% if request.user.is_active %}
-            <a class="user">{{ user.email}}</a>
-          {% endif %}
-        {% else %}  
-          <li><a class="cd-signin" href="{% url 'login' %}">Sign in</a></li>
-        {% endif %}
-        {% if user.is_authenticated %}
-          {% if request.user.is_active %}
-            <li><a class="cd-signup"  href="logout">Logout</a></li>
-          {% endif %}
-        {% else %}                     
-          <li><a class="cd-signup" href="{% url 'register' %}">Sign up</a></li>
-        {% endif %}
-      </div>
+    <header>
+      <!-- Start nav -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">
+              <img alt="Brand" src="{% static '/img/favicon.ico' %}">
+            </a>
+            <a class="navbar-brand navbar-resize" href="{% url 'home' %}">NDMC library</a>
+          </div>
+          <div id="navbar" class="navbar-collapse navbar-right collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="{% url 'books:books' %}">Books</a></li>
+              <li><a href="{% url 'books:books' %}">Author</a></li>
+              <li><a href="{% url 'books:books' %}">Genre</a></li>
+            </ul>
+            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button"  ><a href="{% url 'login' %}">
+              <span>Sign in</span></a>
+            </button>
+          </div>
+        </div>
       </nav>
-    </div>  
-      <header class="main_h">
-        <div class="row">
-          <a class="logo" href="#">P/F</a>
-          <div class="mobile-toggle"></div>
-        </div> 
-      </header>
+    </header>
       <div class="hero">
         <h1><span>“Reading is essential for those who seek to rise above the ordinary.” </span><br>NDMC library</h1>
         <div class="mouse">
           <span></span>
         </div>
       </div>
-      <div class="calendar">
+       <div class="calendar">
         <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;height=260&amp;wkst=1&amp;bgcolor=%23999900&amp;src=en.philippines%23holiday%40group.v.calendar.google.com&amp;color=%2329527A&amp;src=3c4fbsmt61raik08unrj26v0f4%40group.calendar.google.com&amp;color=%23691426&amp;ctz=Asia%2FManila" style="border:solid 1px #777" width="350" height="260" frameborder="0" scrolling="no"></iframe>
         <iframe style="float: right; margin-right:  20px;" width="450" height="260"src="https://www.youtube.com/embed/xKk655CDFn8" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-      </div>
-      <div id="cd-reset-password"> <!-- reset password form -->
-        <p class="cd-form-message">Lost your password? Please enter your email address. You will receive a link to create a new password.</p>
-        <form class="cd-form">
-          <p class="fieldset">
-            <label class="image-replace cd-email" for="reset-email">E-mail</label>
-            <input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
-            <span class="cd-error-message">Error message here!</span>
-          </p>
-          <p class="fieldset">
-            <input class="full-width has-padding" type="submit" value="Reset password">
-          </p>
-        </form>
-        <p class="cd-form-bottom-message"><a href="#0">Back to log-in</a></p>
-      </div> <!-- cd-reset-password -->
-      <a href="#0" class="cd-close-form">Close</a>
-    </div>
-  </body>
-  <footer class="footer-distributed">
-    <div class="footer-left">
-      <h3>NDMC<span>Library</span></h3>
+    <!-- back to top -->
+  </div>
+        <footer class="footer-distributed">
+
+      <div class="footer-left">
+
+        <h3>NDMC<span>Library</span></h3>
+
         <p class="footer-links">
-          <a href="">Home</a>
+          <a href="#">Home</a>
           ·
-          <a href="{% url 'books:books' %}">Books</a>
+          <a href="#">Blog</a>
           ·
           <a href="#">Pricing</a>
           ·
@@ -91,25 +73,49 @@
           ·
           <a href="#">Contact</a>
         </p>
-        <p class="footer-company-name">NDMCLibrary &copy; 2018</p>
+
+        <p class="footer-company-name">NDMC Library &copy; 2018</p>
+      </div>
+
+      <div class="footer-center">
+
+        <div>
+          <i class="fa fa-map-marker"></i>
+          <p><span>Quezon Avenue </span>Midsayap, Cotabato 9410 </p>
+        </div>
+
+        <div>
+          <i class="fa fa-phone"></i>
+          <p> Phone: (064) 229-8455</p>
+        </div>
+
+        <div>
+          <i class="fa fa-envelope"></i>
+          <p><a href="mailto:support@company.com">Email: info@ndmc.edu.ph</a></p>
+        </div>
+
+      </div>
+
+      <div class="footer-right">
+
+        <p class="footer-company-about">
+          <span>About Us</span>
+          The Notre Dame of Midsayap College, founded in 1941, is the first Notre Dame school in Asia. The name "Notre Dame" was suggested by...
+        </p>
+
         <div class="footer-icons">
+
           <a href="#"><i class="fa fa-facebook"></i></a>
           <a href="#"><i class="fa fa-twitter"></i></a>
           <a href="#"><i class="fa fa-linkedin"></i></a>
           <a href="#"><i class="fa fa-github"></i></a>
-        </div>
-    </div>
-    <div class="footer-right">
-      <p>Contact Us</p>
-      <form action="#" method="post">
-        <input type="text" name="email" placeholder="Email" />
-        <textarea name="message" placeholder="Message"></textarea>
-        <button>Send</button>
-      </form>
-    </div>
-  </footer>
-    <a href="#0" class="cd-top js-cd-top">Top</a>
-</html>
 
-<script type="text/javascript" src="{% static 'js/jquery.js' %}"></script>
-<script src="{% static 'js/fade.js' %}"></script>
+        </div>
+
+      </div>
+
+    </footer>
+    <a href="#0" class="cd-top js-cd-top">Top</a>
+    {% include 'snippets/js.html' %}
+  </body>
+</html>

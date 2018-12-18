@@ -1,11 +1,13 @@
-{% include 'base.html'%}
+
 {% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
   <title>NDMC Library | Login</title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
 </head>
+{% include 'base.html'%}
 <body>
 
 {% block content %}
@@ -16,15 +18,8 @@
   {% endfor %}
   </div>
 {% endif %}
-<section class="blog-content-area section-padding-0-100">
-  <div class="container">
-    <div class="row justify-content-center">
-      <!-- Blog Posts Area -->
-      <div class="col-12 col-lg-8">
-        <div class="blog-posts-area">
-          <!-- Leave A Comment -->
-          <div class="leave-comment-area clearfix">
-            <div class="comment-form">
+<div class="card"> 
+ 
               <h4 class="headline">Login</h4>
                 <form method="post" action="{% url 'login' %}">
                   {% csrf_token %}
@@ -47,13 +42,9 @@
                   </div>
                 </div>
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+   
 </section>
+</div>
 {% endblock %}
 </body>
 {% include 'footer.html'%}

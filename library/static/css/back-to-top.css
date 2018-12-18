@@ -26,7 +26,6 @@ Primary style
   -webkit-transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
   transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
   border-radius: 10px;
-  z-index: 100;
 }
 .cd-top-layout{
   border-radius: 10px;

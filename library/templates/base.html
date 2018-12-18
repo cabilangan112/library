@@ -1,37 +1,45 @@
-{% load static from staticfiles %}
+{% load staticfiles %}
 <!DOCTYPE html>
-<html>
-  <head>
- 
+<html lang=en>
+  <head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="https://getbootstrap.com/docs/3.3/favicon.ico">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/user.css' %}"> 
-    <link type="text/css" rel="stylesheet" href="{% static 'css/home-base.css' %}"> 
-    <link type="text/css" rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/footer-base.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>NDMC Library</title>
+    {% include 'snippets/css.html'%}
   </head>
-  <div class="topnav" id="myTopnav">
-    <a href="{% url 'home' %}" class="active">Home</a>
-    <a href="{% url 'books:books' %}">Books</a>
-    <a href="{% url 'books:authors' %}">Authors</a>
-    <a href="{% url 'books:genres' %}">Genre</a>
-    <nav class="main-nav">
-      <div>
-      {% if user.is_authenticated %}
-        {% if request.user.is_active %}
-          <a class="user">{{ user.email}}</a>
-        {% endif %}
-      {% else %}  
-        <li><a class="cd-signin" href="{% url 'login' %}">Sign in</a></li>
-      {% endif %}
-      {% if user.is_authenticated %}
-        {% if request.user.is_active %}
-          <li><a class="cd-signup"  href="logout">Logout</a></li>
-        {% endif %}
-      {% else %}                     
-        <li><a class="cd-signup" href="{% url 'register' %}">Sign up</a></li>
-      {% endif %}
-    </div>
-    </nav>
-  </div>  
- 
+  <body>
+    <header>
+      <!-- Start nav -->
+      <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="">
+              <img alt="Brand" src="{% static '/img/favicon.ico' %}">
+            </a>
+            <a class="navbar-brand navbar-resize" href="{% url 'home' %}">NDMC library</a>
+          </div>
+          <div id="navbar" class="navbar-collapse navbar-right collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="{% url 'books:books' %}">Books</a></li>
+              <li><a href="{% url 'books:books' %}">Author</a></li>
+              <li><a href="{% url 'books:books' %}">Genre</a></li>
+            </ul>
+            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" data-toggle="modal" data-target="#myModal">
+              <span>Sign in</span>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </header>

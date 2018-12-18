@@ -117,7 +117,7 @@ header[role=banner]::after {
   border-top: 1px solid #3b3d4b;
   color: #FFF;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1000px) {
   .main-nav {
     width: auto;
     height: auto;
