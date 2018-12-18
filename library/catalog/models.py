@@ -14,14 +14,14 @@ class BookQuerySet(models.query.QuerySet):
         if query:
             query = query.strip()
             return self.filter(
-                Q(book__title__icontains=query)|
-                Q(book__author__icontains=query)|
-                Q(book__isbn__icontains=query)|
-                Q(book__genre__name__iexact=query)|
+                Q(title__icontains=query)|
+                Q(author__icontains=query)|
+                Q(isbn__icontains=query)|
+                Q(genre__name__iexact=query)|
                 Q(author__first_name__icontains=query)|
                 Q(author__last_name__iexact=query)|
-                Q(author__date_of_birth__icontains=query)|
-                Q(author__date_of_death__iexact=query)                
+                Q(author__date_of_birth__icontains=query)
+                              
                 ).distinct()
         return self
  

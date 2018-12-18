@@ -33,11 +33,11 @@
           <div id="navbar" class="navbar-collapse navbar-right collapse">
             <ul class="nav navbar-nav">
               <li><a href="{% url 'books:books' %}">Books</a></li>
-              <li><a href="{% url 'books:books' %}">Author</a></li>
-              <li><a href="{% url 'books:books' %}">Genre</a></li>
+              <li><a href="{% url 'books:authors' %}">Author</a></li>
+              <li><a href="{% url 'books:genres' %}">Genre</a></li>
             </ul>
-            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button"  ><a href="{% url 'login' %}">
-              <span>Sign in</span></a>
+            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" value="{%  url 'login' }" >
+              <span>Sign in</span>
             </button>
           </div>
         </div>

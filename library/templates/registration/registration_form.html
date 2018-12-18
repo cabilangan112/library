@@ -3,10 +3,9 @@
 <html>
   <head>
     <title>NDMC Library | Registration</title>
-     {% include 'base.html'%}
     <link rel="stylesheet" href="{% static 'css/register.css' %}">
-
   </head>
+  {% include 'base.html'%}
   <body>
   {% block content %}
   {% if form.errors %}
@@ -17,84 +16,82 @@
     </div>
   {% endif %}
 
-    <section class="blog-content-area section-padding-0-100">
-        <div class="card">
- 
-                <div class="comment-form">
-                  <h1 class="headline">Registration : </h1>
-                  <!-- Comment Form -->
-                    <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="row">
-                      <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.id_number.label_tag }}</td>
-                          <td>{{ form.id_number }}</td>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.last_name.label_tag }}</td>
-                          <td>{{ form.last_name }}</td>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.first_name.label_tag }}</td>
-                          <td>{{ form.first_name }}</td>
-                        </div>
-                      </div>
-                        <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.course.label_tag }}</td>
-                          <td>{{ form.course }}</td>
-                        </div>
-                      </div>  
-                      <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.Year.label_tag }}</td>
-                          <td>{{ form.Year }}</td>
-                        </div>
-                      </div>
-                        <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.department.label_tag }}</td>
-                          <td>{{ form.department }}</td>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.email.label_tag }}</td>
-                          <td>{{ form.email }}</td>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.password1.label_tag }}</td>
-                          <td>{{ form.password1 }}</td>
-                        </div>
-                      </div>
-                        <div class="col-12">
-                        <div class="form-group">
-                          <td>{{ form.password2.label_tag }}</td>
-                          <td>{{ form.password2 }}</td>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                      <button class="login" type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
-                      </div>
-                    </div>
-                  </form>
-         
-      
+  <section class="blog-content-area section-padding-0-100">
+      <div class="card">
+        <div class="comment-form">
+          <h1 class="headline">Registration : </h1>
+          <!-- Comment Form -->
+          <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.id_number.label_tag }}</td>
+                <td>{{ form.id_number }}</td>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.last_name.label_tag }}</td>
+                <td>{{ form.last_name }}</td>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.first_name.label_tag }}</td>
+                <td>{{ form.first_name }}</td>
+              </div>
+            </div>
+              <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.course.label_tag }}</td>
+                <td>{{ form.course }}</td>
+              </div>
+            </div>  
+            <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.Year.label_tag }}</td>
+                <td>{{ form.Year }}</td>
+              </div>
+            </div>
+              <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.department.label_tag }}</td>
+                <td>{{ form.department }}</td>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.email.label_tag }}</td>
+                <td>{{ form.email }}</td>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.password1.label_tag }}</td>
+                <td>{{ form.password1 }}</td>
+              </div>
+            </div>
+              <div class="col-12">
+              <div class="form-group">
+                <td>{{ form.password2.label_tag }}</td>
+                <td>{{ form.password2 }}</td>
+              </div>
+            </div>
+            <div class="col-12">
+            <button class="login" type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
-    </section>
+  </section>
  
   </body>
 {% include 'footer.html'%}
 
 </html>
-{% endblock %}
 {% include 'snippets/js.html' %}
+{% endblock %}
+
 

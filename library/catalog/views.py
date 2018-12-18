@@ -35,7 +35,7 @@ def index(request):
 class BooksView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
-        book = Book.objects.all().order_by("-title").search(query)
+        book = Book.objects.all().order_by("title").search(query)
 
         if book.exists():
             return render(request, "catalog/book_list.html",{'book':book})

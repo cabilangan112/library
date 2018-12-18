@@ -1,19 +1,31 @@
-{% include 'base.html'%}
 {% load static from staticfiles %}
 {% block content %} 
 <!DOCTYPE html>
 <html>
 	<head>
  		<title>NDMC Library | Book List</title>
+ 		<link href="{% static 'css/book-list.css' %}" rel="stylesheet">
 	</head>
+	{% include 'base.html'%}	
 	<body>
-		{% if book %}
-			{% for book in book %}
-				<p>{{ book.title }}</p>
-			{% endfor %}
-		{% else %}
-			<p>Empty</p>
-		{% endif %}
+		<div class="list">
+			<form class='form' method='GET' action='.'>
+				<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
+				<button class='btn btn-default' type='submit' style="padding: 11px;">Search</button>
+		</form>
+			{% if book %}
+				{% for book in book %}
+					<h2>{{ book.title }}</h2>
+					<p class="book">ISBN : {{ book.isbn }}</p>
+					<p class="book">Genre {{ book.genre.name }}</p>	
+					<p class="book">{{ book.summary }}</p>
+					<p class="book">Author : {{ book.author }}</p>
+					<p></p>
+				{% endfor %}
+			{% else %}
+				<p>Empty</p>
+			{% endif %}
+		</div>
 	</body>
 {% include 'footer.html'%}
 {% endblock content %}

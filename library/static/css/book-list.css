@@ -1,0 +1,47 @@
+.list{
+	margin-top: 90px;
+	margin-left: 200px;
+	margin-bottom: 100px;
+}
+.book{
+  margin-bottom: 0px;
+  margin-left: 10px;
+
+}
+.button{
+  padding: 11px;
+
+
+}
+input[type=text], select, textarea {
+    width: 60%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 3px;
+    resize: vertical;
+}
+
+.form{
+	margin-left: 90px;
+	margin-bottom: 50px;
+}
+ 
+@media (max-width: 1000px){
+	.list{
+		margin-top: 90px;
+		margin: 10px;
+		left: 0;
+		right: 0;
+		margin-bottom: 50px;
+	}
+	.list input[type=text]{
+		margin-top: 70px;
+ 		left: 0;
+		right: 0;
+		margin-left: -90px;
+		width: 100%;
+ 
+	}
+
+}
