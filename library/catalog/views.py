@@ -109,7 +109,7 @@ class AuthorView(View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
         author = Author.objects.all()
-        qs = Book.objects.all().order_by("-updated").search(query)
+        qs = Book.objects.all().order_by("-author").search(query)
 
         if author and qs.exists():
             return render(request, "catalog/author_list.html",{'author':qs})

@@ -8,25 +8,31 @@
 	</head>
 	{% include 'base.html'%}	
 	<body>
+		<div>
 		<div class="list">
 			<form class='form' method='GET' action='.'>
 				<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
-				<button class='btn btn-default' type='submit' style="padding: 11px;">Search</button>
+				<button class='btn btn-default' type='submit'  >Search</button>
 		</form>
+			<h2 class="title">Book List :</h2>
 			{% if book %}
 				{% for book in book %}
-					<h2><a  class="link" href="{% url "books:book" book.title%}">{{ book.title }}</a></h2>
+						<div class="card">
+					<h2 class="author"><a  class="link" href="{% url "books:book" book.title%}">{{ book.title }}</a></h2>
 					<p class="book">ISBN : {{ book.isbn }}</p>
-
 					<p class="book">Genre : {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>	
 					<p class="book">{{ book.summary }}</p>
-					<p class="book">Author : {{ book.author }}</p>
-					<p></p>
+					<p class="book">Author : {{ book.author }} ({{book.author.date_of_birth}} - {{book.author.date_of_death}})</p>
+			 		{% for instance  in book.bookinstance_set.all %} 
+		 				<p class="book"> Imprint : {{  instance.imprint }}</p>
+					{% endfor %}	
+				</div>
 				{% endfor %}
 			{% else %}
 				<p>Empty</p>
 			{% endif %}
 		</div>
+ 
 	</body>
 {% include 'footer.html'%}
 {% endblock content %}

@@ -26,6 +26,14 @@
   .list{
   	margin-right: 10px;
   }
+  .copy{
+ 		margin-left: -20px;
+ 		margin-right: 10px;
+ 		margin-bottom: 90px;
+  	left: 0;
+  	right: 0;
+  	text-align: center;
+  }
 
 }
  

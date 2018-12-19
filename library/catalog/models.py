@@ -86,7 +86,15 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
+    @property
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}".title()
 
+    @property
+    def get_display_name(self):
+        if self.first_name and self.last_name:
+            return self.get_full_name
+        return f"{self.email}"
 
 class Borrow(models.Model):
     borrower           = models.ForeignKey(User, on_delete = models.CASCADE)
