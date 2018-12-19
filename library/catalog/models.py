@@ -1,7 +1,9 @@
 from django.db import models
 from django.urls import reverse
+from django.conf import settings
 from django.db.models import Q
 import uuid
+User = settings.AUTH_USER_MODEL
 
 LOAN_STATUS = (
     ('m', 'Maintenance'),
@@ -84,3 +86,34 @@ class Author(models.Model):
 
     def __str__(self):
         return f'{self.last_name}, {self.first_name}'
+
+
+class Borrow(models.Model):
+    borrower           = models.ForeignKey(User, on_delete = models.CASCADE)
+    book               = models.ForeignKey(Book, on_delete = models.CASCADE)
+    date_of_borrowing  = models.DateTimeField(auto_now_add = True)
+    due_back           = models.DateField(null=True, blank=True)
+    
+    borrow             = models.BooleanField(default=False)
+    returned           = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-date_of_borrowing']
+
+    def __str__(self):
+        return f'{self.borrower} ({self.book.title})'
+
+class Borrow(models.Model):
+    user                 = models.ForeignKey(User, on_delete = models.CASCADE)
+    book                 = models.ForeignKey(Book, on_delete = models.CASCADE)
+    date_of_reservation  = models.DateTimeField(auto_now_add = True)
+    due_back             = models.DateField(null=True, blank=True)
+    
+    reserve              = models.BooleanField(default=False)
+    returned             = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['-date_of_reservation']
+
+    def __str__(self):
+        return f'{self.user} ({self.book.title})'

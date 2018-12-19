@@ -13,6 +13,7 @@ urlpatterns = [
     path('<title>', views.BookDetailView.as_view(), name='book'),
     path('<title>', views.book_edit, name='edit-book'),
     path('book/create/', views.BookDetailView.as_view(), name='book-create'),
+    path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
 
 #Authors
 

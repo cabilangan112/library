@@ -15,9 +15,10 @@
 		</form>
 			{% if book %}
 				{% for book in book %}
-					<h2>{{ book.title }}</h2>
+					<h2><a  class="link" href="{% url "books:book" book.title%}">{{ book.title }}</a></h2>
 					<p class="book">ISBN : {{ book.isbn }}</p>
-					<p class="book">Genre {{ book.genre.name }}</p>	
+
+					<p class="book">Genre : {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>	
 					<p class="book">{{ book.summary }}</p>
 					<p class="book">Author : {{ book.author }}</p>
 					<p></p>

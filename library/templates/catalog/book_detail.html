@@ -1,9 +1,37 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title>{{ book.title }}</title>
+	 <link href="{% static 'css/book-detail.css' %}" rel="stylesheet">
 </head>
+{% include 'base.html'%}	
 <body>
-
+	{% block content %}
+		<div class="detail">
+		  <h1>Title: {{ book.title }} </h1>
+			<div class="list">
+				<p><strong>Author : </strong> <a class="link" href = " ">  {{ book.author }}</a></p>
+				<p><strong>Summary : </strong>  {{ book.summary }}  </p>
+				<p><strong>ISBN : </strong> {{ book.isbn }}</p>
+				<p><strong>Genre : </strong>  {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
+				<div style="margin-left:20px;margin-top:20px">
+			  {% if book.bookinstance_set.all %}
+				  <h4>Copies</h4>
+				  {% for copy in book.bookinstance_set.all %}
+				    <hr>
+				    <p class="{% if copy.status == 'a' %}text-success{% elif copy.status == 'd' %}text-danger{% else %}text-warning{% endif %}">{{ copy.get_status_display }}</p>
+				    {% if copy.status != 'a' %}<p><strong>Due to be returned:</strong> {{copy.due_back}}</p>{% endif %}
+				    <p><strong>Imprint:</strong> {{copy.imprint}}</p>
+				    <p class="text-muted"><strong>Id:</strong> {{copy.id}}</p>
+					{% endfor %}
+				{% else %}
+					<h2 class="copy"><strong>Thise Book Dont have a Copy</strong></h2>
+				{% endif %}
+			  </div>
+			</div>
+		</div>
+{% include 'footer.html'%}
+{% endblock %}
 </body>
-</html>>
+</html>

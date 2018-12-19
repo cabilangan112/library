@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Author, Genre, Book, BookInstance
+from .models import Author, Genre, Book, BookInstance,Borrow
 
 class BooksInstanceInline(admin.TabularInline):
     model = BookInstance
@@ -27,4 +27,5 @@ class BookInstanceAdmin(admin.ModelAdmin):
 admin.site.register(Book,BookAdmin)
 admin.site.register(Author,AuthorAdmin)
 admin.site.register(Genre)
+admin.site.register(Borrow)
 admin.site.register(BookInstance,BookInstanceAdmin)

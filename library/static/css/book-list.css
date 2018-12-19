@@ -8,9 +8,8 @@
   margin-left: 10px;
 
 }
-.button{
-  padding: 11px;
-
+.link{
+  color: black;	
 
 }
 input[type=text], select, textarea {
