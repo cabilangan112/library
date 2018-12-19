@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth import get_user_model
-from .models import Genre,Book,BookInstance, Author
+from .models import Genre,Book,BookInstance, Author,Borrow,Reserved
 
 class RenewBookModelForm(ModelForm):
     def clean_due_back(self):
@@ -77,3 +77,30 @@ class GenreModelForm(forms.ModelForm):
         fields = [
             'name'
             ]
+
+class BorrowForm(forms.ModelForm):
+
+    class Meta:
+        model = Borrow
+        fields = [
+            'borrower',
+            'book',
+            'due_back',
+            'date_of_renewal',
+            'borrow',
+            'returned'
+            ]
+
+class ReserveForm(forms.ModelForm):
+
+    class Meta:
+        model = Reserved
+        fields = [
+            'user',
+            'book',
+            'due_date',
+            'reserve',
+ 
+            ]
+
+            

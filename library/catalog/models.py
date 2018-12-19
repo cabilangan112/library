@@ -92,7 +92,9 @@ class Borrow(models.Model):
     borrower           = models.ForeignKey(User, on_delete = models.CASCADE)
     book               = models.ForeignKey(Book, on_delete = models.CASCADE)
     date_of_borrowing  = models.DateTimeField(auto_now_add = True)
+
     due_back           = models.DateField(null=True, blank=True)
+    date_of_renewal    = models.DateField(null=True, blank=True)
     
     borrow             = models.BooleanField(default=False)
     returned           = models.BooleanField(default=False)
@@ -103,14 +105,14 @@ class Borrow(models.Model):
     def __str__(self):
         return f'{self.borrower} ({self.book.title})'
 
-class Borrow(models.Model):
+class Reserved(models.Model):
     user                 = models.ForeignKey(User, on_delete = models.CASCADE)
     book                 = models.ForeignKey(Book, on_delete = models.CASCADE)
     date_of_reservation  = models.DateTimeField(auto_now_add = True)
-    due_back             = models.DateField(null=True, blank=True)
+    due_date             = models.DateField(null=True, blank=True)
     
     reserve              = models.BooleanField(default=False)
-    returned             = models.BooleanField(default=False)
+
 
     class Meta:
         ordering = ['-date_of_reservation']
