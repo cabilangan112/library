@@ -3,15 +3,19 @@
   padding-top: 30px;
   margin-top: 80px;
   margin-bottom: 90px;
-  text-align: center;
+  padding-left: 100px;
   padding-bottom:10px;
   border: 1px solid #f2f2f2;
   border-radius: 3px;
   max-width: 800px;
   margin-left: 250px;
   background-color: white;
-  height: 350px;
-
+  height: 550px;
+  box-shadow: 1px 0px 10px 1px rgba(0,0,0,0.5);
+}
+.headline{
+  margin-left:190px;
+  margin-bottom: 40px;
 }
 input[type=text], select, textarea {
   width: 55%;
@@ -32,14 +36,11 @@ button {
   border: none;
   cursor: pointer;
   opacity: 0.9;
-}
-
-h2{
   text-align: center;
-  padding-bottom: 10px;
 }
 
-input[type=submit] {
+ 
+.card input[type=submit] {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
@@ -53,6 +54,7 @@ input[type=submit] {
 
 input[type=submit]:hover {
     background-color: #45a049;
+    text-align: center;
 }
 input[type=password], select, textarea {
   width: 60%;
@@ -66,24 +68,28 @@ input[type=password], select, textarea {
  
 @media (max-width: 1000px){
   .card{
-  margin: 0px;
-  left: 0px;
-  right: 0px;
-  }
-  .container input{
-    width: 50%;
-    height: 10%;
-    text-align: left;
-  }
-  .card{
-    text-align: left;
+    height: 570px;
     margin-top: 50px;
     width: 100%;
+    margin-left: -80px;
+    padding-top: 60px;
+    margin-right: 20px;
+    margin-bottom: 0px;
+    padding-right: 20px;
+  }
+  .card input[type=text]{
+    padding: 10px;
+    width: 70%
+  }
+  .headline{
+    margin-left:50px;
+    margin-bottom: 50px;
+  }
+  .title{
+    font-size: 20px;
   }
   .card input[type=submit]{
-    text-align: center;
-  }
-  .card form{
-    text-align: center;
+    float: right;
+    width: 100px;
   }
 }

@@ -4,7 +4,7 @@
 <head>
   <title>NDMC Library | Borrowing</title>
   <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
-  <link rel="stylesheet" href="{% static 'css/reserve.css' %}">
+  <link rel="stylesheet" href="{% static 'css/borrow.css' %}">
 </head>
 {% block content %}
 {% include 'base.html'%}
@@ -12,9 +12,9 @@
   <div class="card"> 
     <h2 class="headline">Book Borrowing</h2>
     {% if user.is_authenticated %}
-      <h2 class="title">User : {{user.last_name}} {{user.first_name}}</h2>
+      <h2 class="title">Borrower : {{user.last_name}} {{user.first_name}}</h2>
     {% endif %}
-    <h2 class="title">Title : {{book.title}}</h2>
+    <h2 class="title">Book Title : {{book.title}}</h2>
     <p>Author <strong>: {{book.author}}</p></strong>
     <p>ISBN <strong>: {{book.isbn}}</p></strong>
     <p>{{book.imprint}}</p>

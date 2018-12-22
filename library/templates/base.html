@@ -35,10 +35,17 @@
               <li><a href="{% url 'books:books' %}">Books</a></li>
               <li><a href="{% url 'books:authors' %}">Author</a></li>
               <li><a href="{% url 'books:genres' %}">Genre</a></li>
+              {% if user.is_authenticated %}
+                {% if request.user.is_active %}
+                <li><a href='{% url "user:detail" user.email %}' class="user">{{ user.email}}</a></li>
+                <li><a href=''><span>Logout<span></a></li>
+                {% endif %}
+              {% else %}  
+                <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "login" %}'" >
+                  <span>Sign in</span>
+                </button>
+              {% endif %}
             </ul>
-            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "login" %}'" >
-              <span>Sign in</span>
-            </button>
           </div>
         </div>
       </nav>
