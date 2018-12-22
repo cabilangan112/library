@@ -7,6 +7,7 @@ app_name='catalog'
 urlpatterns = [
 
 #Book
+
     path('genres/', views.GenreView.as_view(), name='genres'),
 
     path('', views.BooksView.as_view(), name='books'),
@@ -28,5 +29,8 @@ urlpatterns = [
     path('<name>', views.book_edit, name='edit-genre'),
     path('genre/create/', views.GenreCreateView.as_view(), name='genre-create'),
 
+#Borrow
 
+    path('borrow/<title>', views.Borrow, name='borrow'),
+    path('reserve/<title>', views.Reserve, name='reserve'),
 ]

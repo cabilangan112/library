@@ -6,31 +6,69 @@ from django.contrib.auth import get_user_model
 import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Book, Author, BookInstance, Genre
-from .forms import RenewBookModelForm,BookModelForm,AuthorModelForm,GenreModelForm
+from .models import Book, Author, BookInstance, Genre,Borrow,Reserve
+from .forms import RenewBookModelForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
 from django.views.generic.base import TemplateView,View
 
 
 class HomeView(TemplateView):
     template_name = 'home.html'
 
-def index(request):
-    num_books = Book.objects.all().count()
-    num_instances = BookInstance.objects.all().count()
-    num_instances_available = BookInstance.objects.filter(status__exact='a').count()
-    num_authors = Author.objects.count()
-    
-    context = {
-        'num_books': num_books,
-        'num_instances': num_instances,
-        'num_instances_available': num_instances_available,
-        'num_authors': num_authors,
-    }
+def Borrow(request,title):
+    book = get_object_or_404(Book, title=title)
+    if request.method == 'POST':
+        form = BorrowForm(request.POST, request.FILES)
+        if form.is_valid():
+            book = form.save(commit=False)
+            book.book= book
+            book.user = request.user
+            book.save()
+            return redirect('/posts')
+    else:
+        form = BorrowForm()
+    context = {'form': form,
+                'book':book
+                }
+    return render(request, 'catalog/borrow-form.html', context)
 
-    # Render the HTML template index.html with the data in the context variable
-    return render(request, 'index.html', context=context)
- 
- #Book
+
+class BorrowView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('q')
+        book = Borrow.objects.all()
+        qs = Book.objects.all().order_by("-title").search(query)
+
+        if author and qs.exists():
+            return render(request, "catalog/borrow_list.html",{'book':qs})
+        return render(request, "catalog/borrow_list.html",{'book':qs})
+
+def Reserve(request,title):
+    book = get_object_or_404(Book, title=title)
+    if request.method == 'POST':
+        form = ReserveForm(request.POST, request.FILES)
+        if form.is_valid():
+            reserve = form.save(commit=False)
+            reserve.book= book
+            reserve.user = request.user
+            reserve.save()
+            return redirect('/posts')
+    else:
+        form = ReserveForm()
+    context = {'form': form,
+                'book':book
+                }
+    return render(request, 'reserve-form.html', context)
+
+
+class ReserveView(View):
+    def get(self, request, *args, **kwargs):
+        query = self.request.GET.get('q')
+        book = Reserve.objects.all()
+        qs = Book.objects.all().order_by("-title").search(query)
+
+        if author and qs.exists():
+            return render(request, "catalog/reserve_list.html",{'book':qs})
+        return render(request, "catalog/reserve_list.html",{'book':qs})
 
 class BooksView(View):
     def get(self, request, *args, **kwargs):

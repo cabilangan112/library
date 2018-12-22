@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth import get_user_model
-from .models import Genre,Book,BookInstance, Author,Borrow,Reserved
+from .models import Genre,Book,BookInstance, Author,Borrow,Reserve
 
 class RenewBookModelForm(ModelForm):
     def clean_due_back(self):
@@ -94,7 +94,8 @@ class BorrowForm(forms.ModelForm):
 class ReserveForm(forms.ModelForm):
 
     class Meta:
-        model = Reserved
+        model = Reserve
+        exclude = ('user','book',)
         fields = [
             'user',
             'book',

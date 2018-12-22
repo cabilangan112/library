@@ -113,13 +113,13 @@ class Borrow(models.Model):
     def __str__(self):
         return f'{self.borrower} ({self.book.title})'
 
-class Reserved(models.Model):
+class Reserve(models.Model):
     user                 = models.ForeignKey(User, on_delete = models.CASCADE)
     book                 = models.ForeignKey(Book, on_delete = models.CASCADE)
     date_of_reservation  = models.DateTimeField(auto_now_add = True)
     due_date             = models.DateField(null=True, blank=True)
     
-    reserve              = models.BooleanField(default=False)
+    reserve              = models.BooleanField(default=True)
 
 
     class Meta:
