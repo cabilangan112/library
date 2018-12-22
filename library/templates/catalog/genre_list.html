@@ -17,7 +17,7 @@
 			{% if genre %}
 				{% for  genre in genre %}
 					<div class="card">
-					<h2 class="author"> <a  class="link" href="{% url "books:book" genre.name%}" >{{genre.name}}</a></h2>
+					<h2 class="author"> <a  class="link" href="{% url "books:genre" genre.name%}" >{{genre.name}}</a></h2>
  					</div>
 				{% endfor %}
 			{% else %}

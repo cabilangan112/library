@@ -36,7 +36,7 @@
               <li><a href="{% url 'books:authors' %}">Author</a></li>
               <li><a href="{% url 'books:genres' %}">Genre</a></li>
             </ul>
-            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" data-toggle="modal" data-target="#myModal">
+            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "login" %}'" >
               <span>Sign in</span>
             </button>
           </div>

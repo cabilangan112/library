@@ -9,6 +9,7 @@ from django.contrib.auth import (
 	logout,
 )
 from django.views import generic
+from.models import User
 from django.urls import reverse	
 from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -20,8 +21,8 @@ class ProfileView(View):
         return render(request, "profile/profile_list.html", context)
 
 class ProfileDetailView(View):
-    def get(self, request, id_number, *args, **kwargs):
-        user = get_object_or_404(User, id_number=id_number)
+    def get(self, request, email, *args, **kwargs):
+        user = get_object_or_404(User, email=email)
         context = {'user':user,}
         return render(request, "profile/profile_detail.html", context)
 

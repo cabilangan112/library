@@ -24,13 +24,14 @@ urlpatterns = [
     path('author/create/', views.AuthorCreateView.as_view(), name='author-create'),
 
 #Genre
-
-    path('<name>', views.GenreDetailView.as_view(), name='genre'),
+ 
     path('<name>', views.book_edit, name='edit-genre'),
     path('genre/create/', views.GenreCreateView.as_view(), name='genre-create'),
-
+    path('genre/<name>', views.GenreDetailView.as_view(), name='genre'),
 #Borrow
 
     path('borrow/<title>', views.Borrow, name='borrow'),
     path('reserve/<title>', views.Reserve, name='reserve'),
+
+ 
 ]

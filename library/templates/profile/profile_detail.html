@@ -1,9 +1,14 @@
+{% load static from staticfiles %}
+{% block content %} 
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>{{user.last_name}}</title>
+	{% include 'base.html'%}	
 </head>
 <body>
 
 </body>
-</html>>
+</html>
+{% include 'footer.html'%}
+{% endblock content %}

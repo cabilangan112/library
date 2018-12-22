@@ -19,10 +19,10 @@ def Borrow(request,title):
     if request.method == 'POST':
         form = BorrowForm(request.POST, request.FILES)
         if form.is_valid():
-            book = form.save(commit=False)
-            book.book= book
-            book.user = request.user
-            book.save()
+            borrow = form.save(commit=False)
+            borrow.book= book
+            borrow.borrower = request.user
+            borrow.save()
             return redirect('/posts')
     else:
         form = BorrowForm()
