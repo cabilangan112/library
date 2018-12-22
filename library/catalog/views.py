@@ -161,13 +161,14 @@ def author_edit(request,last_name):
 
 class GenreView(View):
     def get(self, request, *args, **kwargs):
-        query = self.request.GET.get('q')
+
         genre = Genre.objects.all()
-        qs = Book.objects.all().order_by("-updated").search(query)
+        query = self.request.GET.get('q')
+        qs = Book.objects.all().order_by("-genre").search(query)
         
         if genre and qs.exists():
-            return render(request, "catalog/genre_list.html",{'genre':qs})
-        return render(request, "catalog/genre_list.html",{'genre':qs})
+            return render(request, "catalog/genre_list.html",{'genre':genre})
+        return render(request, "catalog/genre_list.html",{'genre':genre})
 
 class GenreDetailView(View):
     def get(self, request, name, *args, **kwargs):
