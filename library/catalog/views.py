@@ -10,9 +10,13 @@ from .models import Book, Author, BookInstance, Genre,Borrow,Reserve
 from .forms import RenewBookModelForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
 from django.views.generic.base import TemplateView,View
 
+ 
 
-class HomeView(TemplateView):
-    template_name = 'home.html'
+class HomeView(View):
+    def get(self, request, *args, **kwargs):
+        book = Book.objects.all()[:3]
+        context = {'book':book,}
+        return render(request, "home.html", context)
 
 def Borrow(request,title):
     book = get_object_or_404(Book, title=title)

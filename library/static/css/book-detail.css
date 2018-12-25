@@ -13,6 +13,10 @@
 	margin-top: 40px;
 	text-align: center;
 }
+.bton{
+	margin-left: 20px;
+  float: left;
+}
 
 @media (max-width: 1000px){
 	.detail{

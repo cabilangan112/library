@@ -57,9 +57,24 @@
         <div class="mouse">
           <span></span>
         </div>
+      </div>
+   <div class="container fade-up fade-ani fade">
+    <hr class="featurette-divider">
+    <div class="row">
+      {% for card in book %}
+        <div class="col-lg-4">
+          <h2>{{ card.title }}</h2>
+          <p>{{ card.summary }}</p>
+          <button type="button" class="btn button btn-sign-in" onclick="location.href='{% url "books:book" card.title%}'" >
+            <span>View Details</span>
+          </button>
+        </div>
+      {% endfor %}
+    </div>
+    <hr class="featurette-divider">
+  </div>
  
- 
-        <footer class="footer-distributed">
+    <footer class="footer-distributed">
 
       <div class="footer-left">
 

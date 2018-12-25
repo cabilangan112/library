@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>{{ book.title }}</title>
+	<title>Title : {{ book.title }}</title>
 	 <link href="{% static 'css/book-detail.css' %}" rel="stylesheet">
 </head>
 {% include 'base.html'%}	
@@ -15,9 +15,12 @@
 				<p><strong>Summary : </strong>  {{ book.summary }}  </p>
 				<p><strong>ISBN : </strong> {{ book.isbn }}</p>
 				<p><strong>Genre : </strong>  {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>
-
-				<a  class="link" href="{% url "books:borrow" book.title%}">Borrow</a>
-				<a  class="link" href="{% url "books:reserve" book.title%}">Reserve</a>
+	              <button type="button" class="bton btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "books:borrow" book.title%}'" >
+	                <span>Borrow</span>
+	              </button>
+ 	              <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "books:reserve" book.title%}'" >
+	                <span>Reserve</span>
+	              </button>
 				<div style="margin-left:20px;margin-top:20px">
 			  {% if book.bookinstance_set.all %}
 				  <h4>Copies</h4>
