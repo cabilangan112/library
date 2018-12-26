@@ -46,20 +46,20 @@ class User(AbstractBaseUser):
     id_number    = models.CharField(max_length=80)
     first_name   = models.CharField(max_length=80)
     last_name    = models.CharField(max_length=80)
-    course       = models.ForeignKey(Course, on_delete = models.CASCADE)
+    course       = models.ForeignKey(Course, null=True, blank=True, on_delete = models.CASCADE)
     Year         = models.CharField(max_length=6, choices=YEAR, blank=True, default=True)
-    department   = models.ForeignKey(Department, on_delete = models.CASCADE)
+    department   = models.ForeignKey(Department, null=True, blank=True, on_delete = models.CASCADE)
 
     is_staff 	 = models.BooleanField(default=False)
     is_active 	 = models.BooleanField(default=True)
 
-    date_joined  = models.DateTimeField(auto_now_add=True)
+    date_joined  = models.DateTimeField(auto_now_add=True) 
     date_updated = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ("first_name", "last_name")
 
-    objects = BaseUserManager()
+    objects = UserManager()
  
 
     def __str__(self):
