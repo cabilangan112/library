@@ -14,17 +14,23 @@ from django.urls import reverse
 from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ProfileView(View):
+class ProfileView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         user = User.objects.all()
         context = {'user':user,}
         return render(request, "profile/profile_list.html", context)
 
-class ProfileDetailView(View):
+class ProfileDetailView(LoginRequiredMixin, View):
     def get(self, request, email, *args, **kwargs):
         user = get_object_or_404(User, email=email)
         context = {'user':user,}
         return render(request, "profile/profile_detail.html", context)
+
+class ProfileReserveView(LoginRequiredMixin,View):
+    def get(self, request, email, *args, **kwargs):
+        user = get_object_or_404(User, email=email)
+        context = {'user':user,}
+        return render(request, "profile/profile-reserve.html", context)
 
 class LoginView(TemplateView):
 	"""

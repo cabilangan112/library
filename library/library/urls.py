@@ -18,6 +18,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
 from account.views import LoginView, RegisterView
+from django.urls import path, include, reverse_lazy
+from django.contrib.auth.views import  LogoutView
 from catalog.views import HomeView
 
 urlpatterns = [
@@ -27,5 +29,6 @@ urlpatterns = [
     path('books/', include('catalog.urls', namespace='books')),
 
     path('login/', LoginView.as_view(), name='login'),
+    path('logout/', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
     path('register/',RegisterView.as_view(), name='register'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

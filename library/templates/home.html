@@ -39,7 +39,7 @@
               {% if user.is_authenticated %}
               {% if request.user.is_active %}
               <li><a href='{% url "user:detail" user.email %}' class="user">{{ user.email}}</a></li>
-              <li><a href=''><span>Logout<span></a></li>
+              <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
               {% endif %}
 
               {% else %}  
@@ -58,7 +58,7 @@
           <span></span>
         </div>
       </div>
-   <div class="container fade-up fade-ani fade">
+   <div class="container">
     <hr class="featurette-divider">
     <div class="row">
       {% for card in book %}

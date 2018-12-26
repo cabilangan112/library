@@ -20,7 +20,7 @@
 {% endif %}
 <div class="card"> 
  
-              <h2 class="headline">Login</h4>
+              <h2 class="headline">Login</h2>
                 <form method="post" action="{% url 'login' %}">
                   {% csrf_token %}
                 <div class="row">
@@ -30,7 +30,7 @@
                       <td>{{ form.email }}</td>
                     </div>
                   </div>
-                  <div class="col-12">
+                  <div class="password col-12">
                     <div class="form-group">
                       <td>{{ form.password.label_tag }}</td>
                       <td>{{ form.password }}</td>
@@ -41,12 +41,14 @@
                     <input type="hidden" name="next" value="{{ next }}" />
                   </div>
                 </div>
-              </form>
-                            <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "register" %}'" >
-                <span>Sign in</span>
+              </form> 
+              <div class="bton">
+                            <button type="button" class="button" onclick="location.href='{% url "register" %}'" >
+                <span>Sign up</span>
               </button>
+            </div>
    
-</section>
+ 
 </div>
 {% endblock %}
 </body>

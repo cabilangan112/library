@@ -4,12 +4,14 @@ from django.views.generic import (ListView,DetailView,CreateView,UpdateView, Vie
 from django.contrib.auth.mixins import (LoginRequiredMixin,PermissionRequiredMixin)
 from django.contrib.auth import get_user_model
 import datetime
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from .models import Book, Author, BookInstance, Genre,Borrow,Reserve
 from .forms import RenewBookModelForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
 from django.views.generic.base import TemplateView,View
-
+from account.decorators import user_required,staff_required
  
 
 class HomeView(View):
@@ -18,7 +20,8 @@ class HomeView(View):
         context = {'book':book,}
         return render(request, "home.html", context)
 
-def Borrow(request,title):
+
+def Borrow(request, title):
     book = get_object_or_404(Book, title=title)
     if request.method == 'POST':
         form = BorrowForm(request.POST, request.FILES)
@@ -64,7 +67,7 @@ def Reserve(request,title):
     return render(request, 'reserve-form.html', context)
 
 
-class ReserveView(View):
+class ReserveView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
         query = self.request.GET.get('q')
         book = Reserve.objects.all()
@@ -82,14 +85,14 @@ class BooksView(View):
         if book.exists():
             return render(request, "catalog/book_list.html",{'book':book})
         return render(request, "catalog/book_list.html",{'book':book})
-
-class BookDetailView(View):
+ 
+class BookDetailView(LoginRequiredMixin, View):
     def get(self, request, title, *args, **kwargs):
         book = get_object_or_404(Book, title=title)
         context = {'book':book,}
         return render(request, "catalog/book_detail.html", context)
 
-class BookCreateView(View):
+class BookCreateView(LoginRequiredMixin,View):
     form_class = BookModelForm
     initial = {'key':'value'}
     template_name = 'catalog/book-form.html'
@@ -111,7 +114,7 @@ class BookCreateView(View):
         }
         return render(request, self.template_name, context)
 
-def book_edit(request,title):
+def book_edit(LoginRequiredMixin,request,title):
     post = get_object_or_404(Book,title=title)
     if request.method == "POST":
         form = BookModelForm(request.POST, instance=post)
@@ -126,7 +129,7 @@ def book_edit(request,title):
     return render(request, 'edit-book.html', {'form': form})
 
 
-def renew_book_librarian(request, pk):
+def renew_book_librarian(LoginRequiredMixin,request, pk):
     book_instance = get_object_or_404(BookInstance, pk=pk)
     if request.method == 'POST':
         form = RenewBookForm(request.POST)

@@ -9,7 +9,6 @@
 	{% include 'base.html'%}	
 </head>
 <body>
-
 		<div class="list">
 			<form class='form' method='GET' action='.'>
 				<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
@@ -22,8 +21,8 @@
 			<div class="navss">
 				{% include 'snippets/nav.html'%}
 			</div>
- 				{% for book in user.borrow_set.all %}
- 					{% if book.borrow %}
+ 				{% for book in user.reserve_set.all %}
+ 					{% if book.reserve %}
 					<div class="card">
 						<h2 class="author"><a  class="link" href=" ">{{ book.book.title }}</a></h2>
 						<p class="book">ISBN : {{ book.book.isbn }}</p>

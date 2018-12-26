@@ -136,7 +136,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "live-static", "static-root")
 MEDIA_URL = "/media/"
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "live-static", "media-root")
-
-LOGIN_REDIRECT_URL = '/'
-
+LOGIN_REDIRECT_URL = '/login/'
+LOGIN_URL = '/login/'
 AUTH_USER_MODEL = 'account.User'
