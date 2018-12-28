@@ -1,0 +1,33 @@
+{% load static from staticfiles %}
+{% block content %} 
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profiles</title>
+	<link href="{% static 'css/user-book.css' %}" rel="stylesheet">
+	<link href="{% static 'css/navss.css' %}" rel="stylesheet">
+	{% include 'base.html'%}	
+</head>
+<body>
+
+		<div class="list">
+			<form class='form' method='GET' action='.'>
+				<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
+				<button class='btn btn-default' type='submit'  >Search</button>
+			</form>
+
+			{% if user %}
+			</div>
+ 				{% for book in user.borrow_set.all %}
+ 					{% if book.borrow %}
+ 							<p>{{book.book.user}}</p>
+					{% endif %}
+				{% endfor %}
+			{% else %}
+				<p>Empty</p>
+			{% endif %}
+		</div>
+</body>
+</html>
+{% include 'footer.html'%}
+{% endblock content %}

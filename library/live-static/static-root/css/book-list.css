@@ -1,3 +1,13 @@
+.buttons{
+  float: right;
+  margin-top: 10px;
+  margin-right: 10px;
+
+}
+
+button[type=submit]{
+	padding: 11px;
+}
 .title{
 	margin-top: -30px;
 }
@@ -10,7 +20,8 @@
   border-radius: 3px;
   width: 850px;
   background-color: white;
- padding: 40px;
+  padding: 40px;
+  padding-bottom: 60px;
 }
 .list{
 	margin-top: 70px;
@@ -66,7 +77,13 @@ input[type=text], select, textarea {
 		width: 100%;
 		margin-right: 10px;
 		margin-top: 20px;
+ 		padding-bottom: 50px;
 			
 	}
+	.buttons{
+  margin-top: 10px;
+  margin-right: 20px;
+
+}
 
 }

@@ -9,7 +9,6 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="https://getbootstrap.com/docs/3.3/favicon.ico">
     <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
     <title>NDMC Library</title>
    
@@ -37,11 +36,13 @@
               <li><a href="{% url 'books:authors' %}">Author</a></li>
               <li><a href="{% url 'books:genres' %}">Genre</a></li>                
               {% if user.is_authenticated %}
-              {% if request.user.is_active %}
-              <li><a href='{% url "user:detail" user.email %}' class="user">{{ user.email}}</a></li>
-              <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
-              {% endif %}
-
+                {% if request.user.is_staff %}
+                  <li><a href='{% url "user:profile" %}' class="user">All User</a></li>
+                  <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
+                {% else %}
+                  <li><a href='{% url "user:detail" user.email %}' class="user">{{ user.email}}</a></li>
+                  <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
+                {% endif %}
               {% else %}  
               <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "login" %}'" >
                 <span>Sign in</span>

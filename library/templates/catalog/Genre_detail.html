@@ -25,6 +25,9 @@
 				 		{% for instance  in book.bookinstance_set.all %} 
 			 			<p class="book"> Imprint : {{  instance.imprint }}</p>
 						{% endfor %}
+						<button  type="button" class="buttons btn button btn-sign-in" onclick="location.href='{% url "books:book" 	book.title%}'" >
+						<span>View Details</span>
+						</button>	
 					</div>
 				{% endfor %}
 			{% else %}

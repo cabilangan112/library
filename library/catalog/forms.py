@@ -105,3 +105,15 @@ class ReserveForm(forms.ModelForm):
             ]
 
             
+class ReturnForm(forms.ModelForm):
+
+    class Meta:
+        model = Borrow
+        exclude = ('borrower','book',)
+        fields = [
+            'borrower',
+            'book',
+            'due_back',
+            'date_of_renewal',
+            'borrow',
+            ]

@@ -21,7 +21,6 @@ button[type=submit]{
   width: 850px;
   background-color: white;
   padding: 40px;
-  padding-bottom: 60px;
 }
 .list{
 	margin-top: 70px;
@@ -77,13 +76,9 @@ input[type=text], select, textarea {
 		width: 100%;
 		margin-right: 10px;
 		margin-top: 20px;
- 		padding-bottom: 50px;
+ 
 			
 	}
-	.buttons{
-  margin-top: 10px;
-  margin-right: 20px;
-
-}
+ 
 
 }

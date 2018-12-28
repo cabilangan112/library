@@ -32,6 +32,12 @@ class ProfileReserveView(LoginRequiredMixin,View):
         context = {'user':user,}
         return render(request, "profile/profile-reserve.html", context)
 
+class ProfileAdminView(LoginRequiredMixin, View):
+    def get(self, request,*args, **kwargs):
+        user = User.objects.all()
+        context = {'user':user,}
+        return render(request, "profile/profile_admin.html", context)
+
 class LoginView(TemplateView):
 	"""
 	Display log in page where registered users can log in

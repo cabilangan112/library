@@ -31,6 +31,7 @@ urlpatterns = [
 #Borrow
 
     path('borrow/<title>', views.Borrow, name='borrow'),
+    path('return/<title>', views.Borrow, name='return'),
     path('reserve/<title>', views.Reserve, name='reserve'),
 
  

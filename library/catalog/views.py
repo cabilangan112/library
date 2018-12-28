@@ -30,7 +30,24 @@ def Borrow(request, title):
             borrow.book= book
             borrow.borrower = request.user
             borrow.save()
-            return redirect('/posts')
+            return redirect('/detail')
+    else:
+        form = BorrowForm()
+    context = {'form': form,
+                'book':book
+                }
+    return render(request, 'catalog/borrow-form.html', context)
+
+def Return(request, title):
+    book = get_object_or_404(Book, title=title)
+    if request.method == 'POST':
+        form = BorrowForm(request.POST, request.FILES)
+        if form.is_valid():
+            borrow = form.save(commit=False)
+            borrow.book= book
+            borrow.borrower = request.user
+            borrow.save()
+            return redirect('/detail')
     else:
         form = BorrowForm()
     context = {'form': form,
@@ -58,7 +75,7 @@ def Reserve(request,title):
             reserve.book= book
             reserve.user = request.user
             reserve.save()
-            return redirect('/posts')
+            return redirect('/detail-reserve')
     else:
         form = ReserveForm()
     context = {'form': form,
