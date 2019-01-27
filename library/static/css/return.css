@@ -11,7 +11,7 @@
   margin-left: 250px;
   background-color: white;
   height: 450px;
-  padding-bottom: 520px;
+  padding-bottom: 500px;
   box-shadow: 1px 0px 10px 1px rgba(0,0,0,0.5);
 }
 .headline{
@@ -77,15 +77,17 @@ input[type=password], select, textarea {
  
     margin-top: 50px;
     width: 122%;
+    height: 600px;
+    margin-bottom: -150px;
     margin-left: -80px;
     padding-top: 60px;
     margin-right: 20px;
-    margin-bottom: 20px;
     padding-right: 20px;
   }
   .card input[type=text]{
-    padding: 10px;
-    width: 70%
+    padding: 9px;
+    width: 60%
+
   }
   .headline{
     margin-left:50px;
@@ -97,13 +99,5 @@ input[type=password], select, textarea {
   .card input[type=submit]{
     float: right;
     width: 100px;
-  }
-  .book{
-    margin-top: 0px;
-    width: 100%;
-    font-size: 14px;
-    left: 0;
-    right: 0;
-    margin-left: -10px;
   }
 }

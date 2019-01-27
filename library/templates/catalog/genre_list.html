@@ -9,10 +9,7 @@
 	{% include 'base.html'%}	
 	<body>
 		<div class="list">
-			<form class='form' method='GET' action='.'>
-				<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
-				<button class='btn btn-default' type='submit' style="padding: 11px;">Search</button>
-			</form>
+ 
 			<h1 class="title" >Genre List :</h1>
 			{% if genre %}
 				{% for  genre in genre %}

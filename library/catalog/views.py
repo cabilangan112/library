@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth import login
 from django.shortcuts import render, Http404, get_object_or_404, redirect
 from django.views.generic import (ListView,DetailView,CreateView,UpdateView, View)
@@ -8,11 +9,20 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from .models import Book, Author, BookInstance, Genre,Borrow,Reserve
-from .forms import RenewBookModelForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
+from account.models import User
+from .models import Borrow,Book, Author, BookInstance, Genre, Reserve
+from .forms import RenewBookModelForm,ReturnForm,RemoveForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
 from django.views.generic.base import TemplateView,View
 from account.decorators import user_required,staff_required
- 
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string, get_template
+from django.utils.html import strip_tags
+
+
+def sendemail(request):
+    user = request.user
+
+    return redirect('redirect to a new page')
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
@@ -20,17 +30,24 @@ class HomeView(View):
         context = {'book':book,}
         return render(request, "home.html", context)
 
-
-def Borrow(request, title):
+def borrow(request, title):
     book = get_object_or_404(Book, title=title)
     if request.method == 'POST':
         form = BorrowForm(request.POST, request.FILES)
         if form.is_valid():
             borrow = form.save(commit=False)
-            borrow.book= book
+            borrow.book = book
             borrow.borrower = request.user
+            subject = 'Book Borrowing'
+            html_content = render_to_string('email/email.html', {'borrow':borrow})
+            text_content = strip_tags(html_content)
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [borrow.borrower.email,]
+            msg = EmailMultiAlternatives ( subject,html_content, email_from, recipient_list )
+            msg.attach_alternative (html_content, "text/html")
+            msg.send()
             borrow.save()
-            return redirect('/detail')
+            return redirect('account:detail', email=request.user.email)
     else:
         form = BorrowForm()
     context = {'form': form,
@@ -38,23 +55,26 @@ def Borrow(request, title):
                 }
     return render(request, 'catalog/borrow-form.html', context)
 
-def Return(request, title):
-    book = get_object_or_404(Book, title=title)
-    if request.method == 'POST':
-        form = BorrowForm(request.POST, request.FILES)
-        if form.is_valid():
+def Return(request, pk):
+    borrow = get_object_or_404(Borrow, pk=pk)
+    if request.method == "POST":
+        form = ReturnForm(request.POST, instance=borrow)
+        if form.is_valid():           
             borrow = form.save(commit=False)
-            borrow.book= book
-            borrow.borrower = request.user
+            subject = 'Return Book'
+            html_content = render_to_string('email/email.html', {'varname':'value'})
+            text_content = strip_tags(html_content)
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [borrow.borrower.email,]
+            msg = EmailMultiAlternatives ( subject,html_content, email_from, recipient_list )
+            msg.attach_alternative (html_content, "text/html")
+            msg.send()
             borrow.save()
-            return redirect('/detail')
+        return redirect('account:profile')
     else:
-        form = BorrowForm()
-    context = {'form': form,
-                'book':book
-                }
-    return render(request, 'catalog/borrow-form.html', context)
-
+        form = ReturnForm(instance=borrow)
+    return render(request, 'catalog/return-form.html',{'form': form,
+        'borrow':borrow})
 
 class BorrowView(View):
     def get(self, request, *args, **kwargs):
@@ -66,7 +86,7 @@ class BorrowView(View):
             return render(request, "catalog/borrow_list.html",{'book':qs})
         return render(request, "catalog/borrow_list.html",{'book':qs})
 
-def Reserve(request,title):
+def Reserves(request,title):
     book = get_object_or_404(Book, title=title)
     if request.method == 'POST':
         form = ReserveForm(request.POST, request.FILES)
@@ -74,8 +94,16 @@ def Reserve(request,title):
             reserve = form.save(commit=False)
             reserve.book= book
             reserve.user = request.user
+            subject = 'Book Reserve'
+            html_content = render_to_string('email/email.html', {'varname':'value'})
+            text_content = strip_tags(html_content)
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [reserve.user.email,]
+            msg = EmailMultiAlternatives ( subject,html_content, email_from, recipient_list )
+            msg.attach_alternative (html_content, "text/html")
+            msg.send()
             reserve.save()
-            return redirect('/detail-reserve')
+            return redirect('account:detail-reserve', email=request.user.email)
     else:
         form = ReserveForm()
     context = {'form': form,
@@ -83,6 +111,23 @@ def Reserve(request,title):
                 }
     return render(request, 'reserve-form.html', context)
 
+def RemoveView(request, pk):
+    reserve = get_object_or_404(Reserve, pk=pk)
+    if request.method == "POST":
+        form = RemoveForm(request.POST, instance=reserve)
+        if form.is_valid():           
+            reserve = form.save(commit=False)
+            reserve.user = request.user
+            reserve.save()
+        return redirect('account:detail-reserve', email=request.user.email)
+    else:
+        form = RemoveForm(instance=reserve)
+    return render(request, 'catalog/remove-form.html',
+        {
+            'form': form,
+            'reserve':reserve
+        }
+        )
 
 class ReserveView(LoginRequiredMixin,View):
     def get(self, request, *args, **kwargs):
@@ -93,6 +138,13 @@ class ReserveView(LoginRequiredMixin,View):
         if author and qs.exists():
             return render(request, "catalog/reserve_list.html",{'book':qs})
         return render(request, "catalog/reserve_list.html",{'book':qs})
+
+class ReserveDetailView(LoginRequiredMixin, View):
+    def get(self, request, title, *args, **kwargs):
+        book = get_object_or_404(Book, title=title)
+        context = {'book':book,}
+        return render(request, "catalog/reserve_detail.html", context)
+
 
 class BooksView(View):
     def get(self, request, *args, **kwargs):

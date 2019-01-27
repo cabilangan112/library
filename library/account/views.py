@@ -10,6 +10,7 @@ from django.contrib.auth import (
 )
 from django.views import generic
 from.models import User
+from catalog.models import Borrow,Book
 from django.urls import reverse	
 from .forms import UserLoginForm, UserRegisterForm,EditProfileForm,EditPasswordForm
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -32,11 +33,15 @@ class ProfileReserveView(LoginRequiredMixin,View):
         context = {'user':user,}
         return render(request, "profile/profile-reserve.html", context)
 
-class ProfileAdminView(LoginRequiredMixin, View):
+class ProfileAdminView(View):
     def get(self, request,*args, **kwargs):
-        user = User.objects.all()
-        context = {'user':user,}
-        return render(request, "profile/profile_admin.html", context)
+        query = self.request.GET.get('q')
+        prof = Borrow.objects.filter(returned=False)
+        qs = Book.objects.all().order_by("-title").search(query)
+
+        if prof and qs.exists():
+            return render(request, "profile/profile_admin.html",{'prof':qs,})
+        return render(request, "profile/profile_admin.html",{'prof':qs,})
 
 class LoginView(TemplateView):
 	"""

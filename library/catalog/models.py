@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.conf import settings
+from django.core.mail import send_mail
 from django.db.models import Q
 import uuid
 User = settings.AUTH_USER_MODEL
@@ -20,6 +21,10 @@ class BookQuerySet(models.query.QuerySet):
                 Q(author__last_name__icontains=query)|
                 Q(isbn__icontains=query)|
                 Q(author__last_name__icontains=query)|
+                Q(borrow__borrower__last_name__icontains=query)|
+                Q(borrow__borrower__first_name__icontains=query)|
+                Q(borrow__borrower__last_name__iexact=query)|
+                Q(borrow__borrower__first_name__iexact=query)|
                 Q(genre__name__icontains=query)
                 ).distinct()
         return self
@@ -96,12 +101,11 @@ class Author(models.Model):
 class Borrow(models.Model):
     borrower           = models.ForeignKey(User, on_delete = models.CASCADE)
     book               = models.ForeignKey(Book, on_delete = models.CASCADE)
-    date_of_borrowing  = models.DateTimeField(auto_now_add = True)
-
+     
     due_back           = models.DateField(null=True, blank=True)
     date_of_renewal    = models.DateField(null=True, blank=True)
     
-    borrow             = models.BooleanField(default=False)
+    borrow             = models.BooleanField(default=True)
     returned           = models.BooleanField(default=False)
 
     class Meta:
@@ -110,6 +114,7 @@ class Borrow(models.Model):
     def __str__(self):
         return f'{self.borrower} ({self.book.title})'
 
+
 class Reserve(models.Model):
     user                 = models.ForeignKey(User, on_delete = models.CASCADE)
     book                 = models.ForeignKey(Book, on_delete = models.CASCADE)
@@ -117,7 +122,7 @@ class Reserve(models.Model):
     due_date             = models.DateField(null=True, blank=True)
     
     reserve              = models.BooleanField(default=True)
-
+    remove               = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-date_of_reservation']

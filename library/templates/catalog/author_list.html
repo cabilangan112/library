@@ -17,19 +17,18 @@
 			{% if author %}
 				{% for  author in author %}
 					<div class="card">
-					<h2 class="author"> <a  class="link" href="{% url "books:book" author.title%}" >{{ author.author }}({{author.author.date_of_birth}}-{{author.author.date_of_death}})</a></h2>
-					<p class="book">Title : <strong>{{author.title}}</strong></p>
-					<p class="book">ISBN : {{ author.isbn }}</p>
-					<p class="book">summary : {{ author.summary }}</p>
-					<p class="book">Genre : {% for genre  in author.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>	
-					<p class="book">{{ author.book.summary }}</p>
-				 		{% for instance  in author.bookinstance_set.all %} 
-				 			<p class="book"> Imprint : {{  instance.imprint }}</p>
- 						{% endfor %}	
-
-					<button  type="button" class="buttons btn button btn-sign-in" onclick="location.href='{% url "books:book" 	author.title%}'" >
-					<span>View Details</span>
-					</button>	
+  					<h2 class="author"> <a  class="link" href="{% url "books:book" author.title%}" >{{ author.author }}({{author.author.date_of_birth}}-{{author.author.date_of_death}})</a></h2>
+  					<p class="book">Title : <strong>{{author.title}}</strong></p>
+  					<p class="book">ISBN : {{ author.isbn }}</p>
+  					<p class="book">summary : {{ author.summary }}</p>
+  					<p class="book">Genre : {% for genre  in author.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>	
+  					<p class="book">{{ author.book.summary }}</p>
+  			 		{% for instance  in author.bookinstance_set.all %} 
+  			 			<p class="book"> Imprint : {{  instance.imprint }}</p>
+  					{% endfor %}	
+  					<button  type="button" class="buttons btn button btn-sign-in" onclick="location.href='{% url "books:book" 	author.title%}'" >
+  					  <span>View Details</span>
+  					</button>	
  					</div>
 				{% endfor %}
 			{% else %}

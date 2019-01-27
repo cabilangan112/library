@@ -9,20 +9,18 @@
 	{% include 'base.html'%}	
 </head>
 <body>
-
-		<div class="list">
-			<form class='form' method='GET' action='.'>
-				<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
-				<button class='btn btn-default' type='submit'  >Search</button>
-			</form>
-
-			{% if user %}
-
-			<h1 class="title" >{{user.last_name}} :</h1>
-			<div class="navss">
-				{% include 'snippets/nav.html'%}
-			</div>
- 				{% for book in user.borrow_set.all %}
+	<div class="list">
+		<form class='form' method='GET' action='.'>
+			<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
+			<button class='btn btn-default' type='submit'  >Search</button>
+		</form>
+		{% if user %}
+		<h1 class="title" >{{user.last_name}} :</h1>
+		<div class="navss">
+			{% include 'snippets/nav.html'%}
+		</div>
+				{% for book in user.borrow_set.all %}
+					{% if not book.returned %}
  					{% if book.borrow %}
 					<div class="card">
 						<h2 class="author"><a  class="link" href=" ">{{ book.book.title }}</a></h2>
@@ -35,11 +33,12 @@
 						{% endfor %}
 					</div>
 					{% endif %}
-				{% endfor %}
-			{% else %}
-				<p>Empty</p>
-			{% endif %}
-		</div>
+				{% endif %}
+			{% endfor %}
+		{% else %}
+			<p>Empty</p>
+		{% endif %}
+	</div>
 </body>
 </html>
 {% include 'footer.html'%}

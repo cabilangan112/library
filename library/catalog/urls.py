@@ -7,12 +7,15 @@ app_name='catalog'
 urlpatterns = [
 
 #Book
-
+    path('send/email', views.sendemail, name='sends'),
+    path('<int:pk>/', views.RemoveView, name='remove'),
     path('genres/', views.GenreView.as_view(), name='genres'),
-
+    path('return/<int:pk>/', views.Return, name='returned'),
     path('', views.BooksView.as_view(), name='books'),
     path('<title>', views.BookDetailView.as_view(), name='book'),
-    path('<title>', views.book_edit, name='edit-book'),
+    path('reserve-detail/<title>', views.ReserveDetailView.as_view(), name='reserve-detail'),
+    path('edit/<title>', views.book_edit, name='edit-book'),
+
     path('book/create/', views.BookDetailView.as_view(), name='book-create'),
     path('book/<uuid:pk>/renew/', views.renew_book_librarian, name='renew-book-librarian'),
 
@@ -30,9 +33,9 @@ urlpatterns = [
     path('genre/<name>', views.GenreDetailView.as_view(), name='genre'),
 #Borrow
 
-    path('borrow/<title>', views.Borrow, name='borrow'),
-    path('return/<title>', views.Borrow, name='return'),
-    path('reserve/<title>', views.Reserve, name='reserve'),
+    path('borrow/<title>', views.borrow, name='borrow'),
+ 
+    path('reserve/<title>', views.Reserves, name='reserve'),
 
  
 ]

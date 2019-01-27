@@ -3,30 +3,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Profiles</title>
+	<title>Borrowed Books</title>
 	<link href="{% static 'css/user-book.css' %}" rel="stylesheet">
-	<link href="{% static 'css/navss.css' %}" rel="stylesheet">
+	<link href="{% static 'css/borrow.css' %}" rel="stylesheet">
 	{% include 'base.html'%}	
 </head>
 <body>
-
-		<div class="list">
-			<form class='form' method='GET' action='.'>
-				<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
-				<button class='btn btn-default' type='submit'  >Search</button>
-			</form>
-
-			{% if user %}
-			</div>
- 				{% for book in user.borrow_set.all %}
- 					{% if book.borrow %}
- 							<p>{{book.book.user}}</p>
-					{% endif %}
-				{% endfor %}
-			{% else %}
-				<p>Empty</p>
-			{% endif %}
-		</div>
+	<div class="list">
+		<form class='form' method='GET' action='.'>
+			<input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
+			<button class='btn btn-default' type='submit'  >Search</button>
+		</form>
+		{% if prof %} 
+		  {% for prof in prof %}
+			  {% for book  in prof.borrow_set.all %} 
+				  {% if  book.borrow %}
+					  {% if not book.returned %}
+							<li class="books">
+								<a class="book" href="{% url "books:returned" book.id %}" >{{book.book}}({{book.date_of_borrowing}})</a> - {{book.borrower.last_name}} {{book.borrower.first_name}}
+							</li>
+		 		    {% endif %}
+	 			  {% endif %}
+		    {% endfor %}
+	 	  {% endfor %}
+	  {% endif %}
+	</div>
 </body>
 </html>
 {% include 'footer.html'%}

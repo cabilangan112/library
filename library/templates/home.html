@@ -37,16 +37,16 @@
               <li><a href="{% url 'books:genres' %}">Genre</a></li>                
               {% if user.is_authenticated %}
                 {% if request.user.is_staff %}
-                  <li><a href='{% url "user:profile" %}' class="user">All User</a></li>
+                  <li><a href='{% url "user:profile" %}' class="user">Borrowed Books</a></li>
                   <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
                 {% else %}
                   <li><a href='{% url "user:detail" user.email %}' class="user">{{ user.email}}</a></li>
                   <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
                 {% endif %}
               {% else %}  
-              <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "login" %}'" >
-                <span>Sign in</span>
-              </button>
+                <button type="button" class="btn btn-sign-in navbar-btn navbar-right btn-layout button" onclick="location.href='{% url "login" %}'" >
+                  <span>Sign in</span>
+                </button>
               {% endif %}
             </ul>
           </div>

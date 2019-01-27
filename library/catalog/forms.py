@@ -69,7 +69,6 @@ class AuthorModelForm(forms.ModelForm):
 
         book.save()
 
-
 class GenreModelForm(forms.ModelForm):
 
     class Meta:
@@ -87,6 +86,7 @@ class BorrowForm(forms.ModelForm):
             'borrower',
             'book',
             'due_back',
+   
             'date_of_renewal',
             'borrow',
             ]
@@ -95,7 +95,7 @@ class ReserveForm(forms.ModelForm):
 
     class Meta:
         model = Reserve
-        exclude = ('user','book',)
+        exclude = ('user','book','remove')
         fields = [
             'user',
             'book',
@@ -104,6 +104,12 @@ class ReserveForm(forms.ModelForm):
  
             ]
 
+    def clean_book(self):
+        book    = self.data.get('book')
+        book_qs = Reserve.objects.filter(book=book)
+        if book_qs.exists():
+            raise forms.ValidationError("This Fucking Book has already been used")
+        return book
             
 class ReturnForm(forms.ModelForm):
 
@@ -115,5 +121,17 @@ class ReturnForm(forms.ModelForm):
             'book',
             'due_back',
             'date_of_renewal',
-            'borrow',
+            'returned',
+            ]
+
+class RemoveForm(forms.ModelForm):
+
+    class Meta:
+        model = Reserve
+ 
+        fields = [
+            'user',
+            'book',
+            'due_date',
+            'remove'
             ]

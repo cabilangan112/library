@@ -2,9 +2,11 @@
   float: right;
   margin-top: 10px;
   margin-right: 10px;
-
 }
-
+.bton{
+  margin-left: 20px;
+  float: left;
+}
 button[type=submit]{
 	padding: 11px;
 }
@@ -15,12 +17,12 @@ button[type=submit]{
   margin-top: 20px;
   padding-left:10px;
   padding-right:10px;
- 
   border: 1px solid #f2f2f2;
   border-radius: 3px;
   width: 850px;
   background-color: white;
   padding: 40px;
+  padding-bottom: 50px;
 }
 .list{
 	margin-top: 70px;

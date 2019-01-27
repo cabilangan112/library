@@ -1,0 +1,30 @@
+{% load static from staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NDMC Library | Return Form</title>
+  <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" type="image/vnd.microsoft.icon">
+  <link rel="stylesheet" href="{% static 'css/return.css' %}">
+</head>
+{% block content %}
+{% include 'base.html'%}
+<body>
+  <div class="card"> 
+    <h2 class="headline">Return Form</h2>
+    <h2 class="title">Book Title : {{borrow.book.title}}</h2>
+    <p>Author <strong>: {{borrow.book.author}}</p></strong>
+    <p>ISBN <strong>: {{borrow.book.isbn}}</p></strong>
+    <p>{{book.imprint}}</p>
+    {% for instance  in book.bookinstance_set.all %} 
+      <p class="book"> Imprint : {{  instance.imprint }}</p>
+    {% endfor %}  
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form.as_p}}
+      <input type="submit" class="btn btn-primary" value="Return">
+    </form>
+  </div>
+{% endblock %}
+</body>
+{% include 'footer.html'%}
+</html>
