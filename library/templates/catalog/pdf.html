@@ -1,0 +1,61 @@
+{% load static from staticfiles %}
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Report</title>
+ <style type="text/css">
+  .pdf td{
+    font-size: 1em;
+    margin-left: 28px;
+    margin-top: 20px;
+  }
+  .table{
+    margin-bottom: 10px;
+  }
+  .table th{
+    margin-left: -10px;
+    font-size: 1.5em;
+  }
+ 
+ </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <h3>Print Report - {{ today | date:"d/m/Y" }}</h3>
+      </div>
+      <div class="list-group">
+        <p>Incharge: {{ request.user}}</p>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>Author</th>
+            <th>Date Of Borrowing</th>
+            <th>Due Back</th>
+            <th>Borrower</th>
+            <hr></hr>
+          </tr>
+        </thead>
+
+        <tbody class="pdf">
+          <hr></hr>
+          {% for borrow in borrow %}
+            <tr>
+              <td>{{ borrow.book }}</td>
+              <td>{{ borrow.book.author }}</td>
+              <td>{{ borrow.date_of_borrowing | date:"d/m/Y" }}</td>
+              <td>{{ borrow.due_back | date:"d/m/Y" }}</td>
+              <td>{{ borrow.borrower.first_name }} {{ borrow.borrower.last_name }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+ 

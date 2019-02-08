@@ -1,7 +1,7 @@
 {% load static from staticfiles %}
 	<link href="{% static 'css/navs.css' %}" rel="stylesheet">
-
-<div class='navss col-sm-12 text-center col-sm-offset-3'>
+ 
+<div class='navss   col-sm-12 text-center col-sm-offset-3'>
 	{% if request.user.is_authenticated %}
 		{% if request.user.is_superuser %}
 			<a class="link" href=' '><strong>Reserve</strong></a> |
@@ -9,9 +9,11 @@
  
  
 		{% else %}
-			<a class="link"  href='{% url "user:detail" user.email %}'><strong><h4>Borrow</strong></a> |
-			<a class="link"  href='{% url "user:detail-reserve" user.email %} '><strong>Reserve</strong></a> </h4>
- 
+			<p class=navs><a class="link"  href='{% url "user:detail" user.email %}'><strong> Borrow</strong></a> |
+			<a class="link"  href='{% url "user:detail-reserve" user.email %} '><strong>Reserve</strong></a> | 
+ 			<a class="link"  href='{% url "user:edit_profile" user.id %}'><strong>Edit Profile</strong> </a> |
+ 			<a class="link"  href='{% url "user:edit_password" user.id_number %}'><strong>Change Credentials</strong> </a> 
+ 		</p>
 
 		{% endif %}
 	{% else %}

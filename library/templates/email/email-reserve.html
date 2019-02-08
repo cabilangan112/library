@@ -1,10 +1,22 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
+	<link href="{% static 'css/email.css' %}" rel="stylesheet">
 </head>
 <body>
-	<h3>Reserve Book</h3>
-	{{value.book}}
+	<h1>Book Reservation</h1>
+ 	<div class="email">
+ 		<h2>Tile :  {{reserve.book}}</h3>
+ 		<h3>Author :  {{reserve.book.author}}</h3>
+ 		<h3>Genre : 
+ 		 {% for genre in reserve.book.genre.all %} 
+				{{ genre }}
+				{% if not forloop.last %}, 
+				{% endif %}
+			{% endfor %}</p>	</h3>
+	 	<p>Due Date :{{reserve.due_back}}</p> 
+ 	</div> 
 </body>
 </html>

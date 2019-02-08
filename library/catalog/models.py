@@ -101,12 +101,14 @@ class Author(models.Model):
 class Borrow(models.Model):
     borrower           = models.ForeignKey(User, on_delete = models.CASCADE)
     book               = models.ForeignKey(Book, on_delete = models.CASCADE)
-     
+    date_of_borrowing  = models.DateTimeField(auto_now_add = True)
+
     due_back           = models.DateField(null=True, blank=True)
     date_of_renewal    = models.DateField(null=True, blank=True)
     
     borrow             = models.BooleanField(default=True)
     returned           = models.BooleanField(default=False)
+    borrowed            = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-date_of_borrowing']

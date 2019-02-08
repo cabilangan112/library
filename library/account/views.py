@@ -43,6 +43,17 @@ class ProfileAdminView(View):
             return render(request, "profile/profile_admin.html",{'prof':qs,})
         return render(request, "profile/profile_admin.html",{'prof':qs,})
 
+
+class borrowed(View):
+    def get(self, request,*args, **kwargs):
+        query = self.request.GET.get('q')
+        prof = Borrow.objects.filter(returned=False)
+        qs = Book.objects.all().order_by("-title").search(query)
+
+        if prof and qs.exists():
+            return render(request, "profile/borrowed-list.html",{'prof':qs,})
+        return render(request, "profile/borrowed-list.html",{'prof':qs,})
+
 class LoginView(TemplateView):
 	"""
 	Display log in page where registered users can log in
@@ -95,72 +106,19 @@ class RegisterView(TemplateView):
 			return redirect("/")
 		return render(self.request, self.template_name, context)
 
-class EditProfileView(LoginRequiredMixin, generic.TemplateView):
-    """
-    Edit the currently logged in user's profile
-    """
-    login_url = 'login'
-    template_name = 'profile-edit.html'
-
-    def get(self, id_number, *args, **kwargs):
-        title = 'Edit Profile'
-        user = self.request.user
-        users = User.objects.all()
- 
-        instance = get_object_or_404(User,id_number=id_number, user=user)
-
-        initial_data = {
-            'email':user.email,
-            'first_name':user.first_name,
-            'last_name':user.last_name,
-            'Year':user.Year,
-        }
-
-        form = EditProfileForm(
-            self.request.POST or None, 
-            initial=initial_data,
-        )
-
-        context = {
-            'title':title,
-            'instance': instance,
-            'prof_instance':instance,
-            'form':form,
-            'users':users,
-        }
-        return render(self.request, self.template_name, context)
-
-    def post(self, *args, **kwargs):
-        title = 'Edit Profile'
-        user = self.request.user
-        id = user.id
-        users = User.objects.all()
-        instance = get_object_or_404(User, user=user)
-
-        initial_data = {
-            'email':user.email,
-            'first_name':user.first_name,
-            'last_name':user.last_name,
-            'Year':user.Year, 
-        }
-        form = EditProfileForm(
-            self.request.POST or None, 
-            initial=initial_data,
-        )
-
-        if form.is_valid():
-            form.save(user=user)
-            return HttpResponseRedirect(reverse('/'))
-
-        context = {
-        	'title':title,
-            'instance': instance,
-            'prof_instance':instance,
-            'form':form,
-            'users':users,
-        }
-
-        return render(self.request, self.template_name, context)
+def  EditProfileView(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == "POST":
+        form = EditProfileForm(request.POST, instance=user)
+        if form.is_valid():           
+            user = form.save(commit=False)
+            user.user = request.user
+            user.save()
+        return redirect("/")
+    else:
+        form = EditProfileForm(instance=user)
+    return render(request, 'profile/profile-edit.html',{'form': form,
+        'user':user})
 
 class EditPassword(LoginRequiredMixin, generic.TemplateView):
     """
@@ -173,7 +131,7 @@ class EditPassword(LoginRequiredMixin, generic.TemplateView):
         title = 'Edit Password'
         user = self.request.user
         users = User.objects.all()
-        instance = get_object_or_404(User, id_number=id_number, user=user)
+        instance = get_object_or_404(User, id_number=id_number)
 
         form = EditPasswordForm(
             self.request.POST or None
@@ -188,11 +146,11 @@ class EditPassword(LoginRequiredMixin, generic.TemplateView):
 
         return render(self.request, self.template_name, context)
 
-    def post(self, *args, **kwargs):
+    def post(self,id_number, *args, **kwargs):
         title = 'Edit Password'
         users = User.objects.all()
         user = self.request.user
-        instance = get_object_or_404(User, user=user)
+        instance = get_object_or_404(User, id_number=id_number)
 
         form = EditPasswordForm(
             self.request.POST or None

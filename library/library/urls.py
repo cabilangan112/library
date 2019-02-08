@@ -19,6 +19,8 @@ from django.contrib import admin
 from django.urls import path,include
 from account.views import LoginView, RegisterView
 from django.urls import path, include, reverse_lazy
+from django.contrib.auth import views as auth_views
+from django.conf.urls import url
 from django.contrib.auth.views import  LogoutView
 from catalog.views import HomeView
 
@@ -31,4 +33,6 @@ urlpatterns = [
     path('login/', LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page=reverse_lazy('login')), name='logout'),
     path('register/',RegisterView.as_view(), name='register'),
+
+ 
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

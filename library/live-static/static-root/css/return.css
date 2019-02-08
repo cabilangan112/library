@@ -101,3 +101,8 @@ input[type=password], select, textarea {
     width: 100px;
   }
 }
+
+
+.head{
+  text-align: center;
+}

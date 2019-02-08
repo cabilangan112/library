@@ -1,10 +1,22 @@
+{% load static from staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
 	<title></title>
+	<link href="{% static 'css/email.css' %}" rel="stylesheet">
 </head>
 <body>
-	<h3>Return Book</h3>
-	{{value.book}}
+	<h1>Returned Book</h1>
+ 	<div class="email">
+ 		<h2>Tile :  {{borrow.book}}</h3>
+ 		<h3>Author :  {{borrow.book.author}}</h3>
+ 		<h3>Genre :  
+ 			{% for genre in borrow.book.genre.all %} 
+				{{ genre }}
+				{% if not forloop.last %}, 
+				{% endif %}
+			{% endfor %}</p>	</h3>
+	 	<p>Due Date :{{borrow.due_back}}</p>
+ 	</div> 
 </body>
 </html>

@@ -14,10 +14,11 @@ YEAR = (
     ('2nd', 'Second Year'),
     ('3rd', 'Third Year'),
     ('4rt', 'Fourth Year'),
+    ('Personal', 'Personal'),
 )
 class Course(models.Model):
     course_code        = models.CharField(max_length=100)
-    course_description = models.CharField(max_length=100) 
+    course_description = models.CharField(max_length=100, null=True) 
     date_created       = models.DateTimeField(auto_now_add=True)
     date_modified      = models.DateTimeField(auto_now=True)
     
@@ -29,7 +30,7 @@ class Course(models.Model):
 
 class Department(models.Model):
     department_code        = models.CharField(max_length=100)
-    department_description = models.CharField(max_length=100) 
+    department_description = models.CharField(max_length=100,null=True) 
     date_created           = models.DateTimeField(auto_now_add=True)
     date_modified          = models.DateTimeField(auto_now=True)
 
@@ -46,6 +47,7 @@ class User(AbstractBaseUser):
     id_number    = models.CharField(max_length=80)
     first_name   = models.CharField(max_length=80)
     last_name    = models.CharField(max_length=80)
+    middle_name    = models.CharField(max_length=80)
     course       = models.ForeignKey(Course, null=True, blank=True, on_delete = models.CASCADE)
     Year         = models.CharField(max_length=6, choices=YEAR, blank=True, default=True)
     department   = models.ForeignKey(Department, null=True, blank=True, on_delete = models.CASCADE)

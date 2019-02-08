@@ -19,6 +19,7 @@ YEAR = (
     ('2nd', 'Second Year'),
     ('3rd', 'Third Year'),
     ('4rt', 'Fourth Year'),
+    ('Personal', 'Personal'),
 )
 class UserLoginForm(forms.Form):
     """login page"""
@@ -61,6 +62,7 @@ class UserRegisterForm(forms.Form):
     id_number  = forms.CharField(max_length=10,widget=forms.TextInput(attrs={'placeholder': 'Student ID'}))
     first_name = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Lastname'}))
     last_name  = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'Firsname'}))
+    middle_name  = forms.CharField(max_length=20,widget=forms.TextInput(attrs={'placeholder': 'MI'}))
     course     = forms.ModelChoiceField(queryset=Course.objects.all())
     department = forms.ModelChoiceField(queryset=Department.objects.all())
     Year       = forms.ChoiceField(choices=YEAR)
@@ -75,6 +77,7 @@ class UserRegisterForm(forms.Form):
             id_number  = data['id_number'],
             first_name = data['first_name'],
             last_name  = data['last_name'],
+            middle_name  = data['middle_name'],
             course     = data['course'], 
             Year       = data['Year'],
             department = data['department'],
@@ -139,32 +142,18 @@ class EditPasswordForm(forms.Form):
         if password2 != password:
             raise forms.ValidationError('Passwords must match')
 
-class EditProfileForm(forms.Form):
-    """
-    Form for the currently logged in user if he/she wants to edit
-    his/her profile
-    """
-    email = forms.EmailField(label='Email Address')
-    first_name = forms.CharField(max_length=20)
-    last_name = forms.CharField(max_length=20)
-    Year       = forms.ChoiceField(choices=YEAR)
+class EditProfileForm(forms.ModelForm):
 
-    def save(self, user=None):
-        data = self.cleaned_data
-        instance = get_object_or_404(Profile, user=user)
-
-        user.email = data['email']
-        user.first_name = data['first_name']
-        user.last_name = data['last_name']
-        user.Year = data['Year']
-        user.save() 
-
-        def clean_email(self):
-            email = self.data.get('email')
-            username = self.initial.get('username')
-            email_qs = User.objects.filter(email=email).exclude(username=username)
-            if email_qs.exists():
-                raise forms.ValidationError("This email has already been used")
-
-            return email
+    class Meta:
+        model = User
+ 
+        fields = [
+            'first_name',
+            'last_name',
+            'course',
+            'middle_name',
+            'department',
+            'Year'
+ 
+            ]
 

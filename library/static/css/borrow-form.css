@@ -10,10 +10,17 @@
   max-width: 800px;
   margin-left: 250px;
   background-color: white;
-  height: 450px;
-  padding-bottom: 500px;
+  height: 500px;
   box-shadow: 1px 0px 10px 1px rgba(0,0,0,0.5);
+  padding-bottom: 30px;
 }
+p{
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.1em;
+  font-weight: 300;
+  line-height: 1.7em;
+}
+ 
 .headline{
   margin-left:190px;
   margin-bottom: 40px;
@@ -37,11 +44,10 @@ button {
   border: none;
   cursor: pointer;
   opacity: 0.9;
-  text-align: center;
 }
 
  
-.card input[type=submit] {
+input[type=submit] {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
@@ -66,31 +72,24 @@ input[type=password], select, textarea {
   resize: vertical;
   text-align: center;
 }
-.book{
-  color: blue;
-}
-.books{
-  font-size: 20px;
-}
+ 
 @media (max-width: 1000px){
   .card{
- 
+    height: 570px;
     margin-top: 50px;
     width: 122%;
-    height: 600px;
-    margin-bottom: -150px;
     margin-left: -80px;
     padding-top: 60px;
     margin-right: 20px;
+    margin-bottom: 0px;
     padding-right: 20px;
   }
   .card input[type=text]{
-    padding: 9px;
-    width: 60%
-
+    padding: 10px;
+    width: 70%
   }
   .headline{
-    margin-left:50px;
+    margin-left:40px;
     margin-bottom: 50px;
   }
   .title{
@@ -100,9 +99,4 @@ input[type=password], select, textarea {
     float: right;
     width: 100px;
   }
-}
-
-
-.head{
-  text-align: center;
 }

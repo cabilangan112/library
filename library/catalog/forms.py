@@ -81,7 +81,7 @@ class BorrowForm(forms.ModelForm):
 
     class Meta:
         model = Borrow
-        exclude = ('borrower','book',)
+        exclude = ('borrower','book','date_of_renewal',)
         fields = [
             'borrower',
             'book',
@@ -134,4 +134,31 @@ class RemoveForm(forms.ModelForm):
             'book',
             'due_date',
             'remove'
+            ]
+
+class RenewForm(forms.ModelForm):
+
+    class Meta:
+        model = Borrow
+        exclude = ('borrower','book','returned',)
+        fields = [
+            'borrower',
+            'book',
+            'due_back',
+            'date_of_renewal',
+            
+            ]
+
+class BorrowedForm(forms.ModelForm):
+
+    class Meta:
+        model = Borrow
+        exclude = ('borrower','book','date_of_renewal',)
+        fields = [
+            'borrower',
+            'book',
+            'due_back',
+   
+            'date_of_renewal',
+            'borrowed',
             ]

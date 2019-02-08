@@ -7,9 +7,12 @@ app_name='catalog'
 urlpatterns = [
 
 #Book
-    path('send/email', views.sendemail, name='sends'),
     path('<int:pk>/', views.RemoveView, name='remove'),
     path('genres/', views.GenreView.as_view(), name='genres'),
+    path('pdf/', views.Pdf.as_view(), name='pdf'),
+    path('pdf/<int:pk>/', views.Pdf.as_view(), name='pdf'),
+    path('renew/<int:pk>/', views.Renew, name='renew'),
+    path('borrowed/<int:pk>/', views.borrowed, name='borrowed'),
     path('return/<int:pk>/', views.Return, name='returned'),
     path('', views.BooksView.as_view(), name='books'),
     path('<title>', views.BookDetailView.as_view(), name='book'),

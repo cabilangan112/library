@@ -36,7 +36,9 @@
               <li><a href="{% url 'books:genres' %}">Genre</a></li>
               {% if user.is_authenticated %}
                 {% if request.user.is_staff %}
-                  <li><a href="{% url 'user:profile' %}" class="user">Borrowed Books</a></li>
+                  <li><a href="{% url 'user:profile' %}" class="user">Borrow List</a></li>
+                  <li><a href="{% url 'user:borrowed' %}" class="user">Borrowed Books</a></li>
+                  <li><a href="{% url 'catalog:pdf' %}" class="user">Report Borrowed</a></li>
                   <li><a href='{% url "logout" %}'><span>Logout<span></a></li>
                 {% else %}
                   <li><a href='{% url "user:detail" user.email %}' class="user">{{ user.email}}</a></li>

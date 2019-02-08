@@ -11,24 +11,48 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from account.models import User
 from .models import Borrow,Book, Author, BookInstance, Genre, Reserve
-from .forms import RenewBookModelForm,ReturnForm,RemoveForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
+from .forms import RenewBookModelForm,ReturnForm,BorrowedForm,RemoveForm,RenewForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
 from django.views.generic.base import TemplateView,View
 from account.decorators import user_required,staff_required
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string, get_template
 from django.utils.html import strip_tags
+from django.utils import timezone
+from .models import *
+from .render import Render
 
 
-def sendemail(request):
-    user = request.user
-
-    return redirect('redirect to a new page')
 
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         book = Book.objects.all()[:3]
         context = {'book':book,}
         return render(request, "home.html", context)
+
+class Pdf(View):
+
+    def get(self, request):
+        borrow = Borrow.objects.all()
+        today = timezone.now()
+        params = {
+            'today': today,
+            'borrow': borrow,
+             
+        }
+        return Render.render('catalog/pdf.html', params)
+
+class PdfDetail(View):
+
+    def get(self,pk, request):
+        borrow = get_object_or_404(Borrow, pk=pk)
+        today = timezone.now()
+        params = {
+            'today': today,
+            'borrow': borrow,
+            'request': request
+        }
+        return Render.render('catalog/pdf.html', params)
+
 
 def borrow(request, title):
     book = get_object_or_404(Book, title=title)
@@ -38,7 +62,7 @@ def borrow(request, title):
             borrow = form.save(commit=False)
             borrow.book = book
             borrow.borrower = request.user
-            subject = 'Book Borrowing'
+            subject = 'NDMC Book Borrowing'
             html_content = render_to_string('email/email.html', {'borrow':borrow})
             text_content = strip_tags(html_content)
             email_from = settings.EMAIL_HOST_USER
@@ -62,7 +86,29 @@ def Return(request, pk):
         if form.is_valid():           
             borrow = form.save(commit=False)
             subject = 'Return Book'
-            html_content = render_to_string('email/email.html', {'varname':'value'})
+            html_content = render_to_string('email/email-return.html', {'borrow':borrow})
+            text_content = strip_tags(html_content)
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [borrow.borrower.email,]
+            msg = EmailMultiAlternatives ( subject,html_content, email_from, recipient_list )
+            msg.attach_alternative (html_content, "text/html")
+            msg.send()
+            borrow.save()
+        return redirect('account:borrowed')
+    else:
+        form = ReturnForm(instance=borrow)
+    return render(request, 'catalog/return-form.html',{'form': form,
+        'borrow':borrow})
+
+
+def Renew(request, pk):
+    borrow = get_object_or_404(Borrow, pk=pk)
+    if request.method == "POST":
+        form = RenewForm(request.POST, instance=borrow)
+        if form.is_valid():           
+            borrow = form.save(commit=False)
+            subject = 'Renew Date of Borrowing'
+            html_content = render_to_string('email/email-renew.html', {'borrow':borrow})
             text_content = strip_tags(html_content)
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [borrow.borrower.email,]
@@ -72,8 +118,29 @@ def Return(request, pk):
             borrow.save()
         return redirect('account:profile')
     else:
-        form = ReturnForm(instance=borrow)
-    return render(request, 'catalog/return-form.html',{'form': form,
+        form = RenewForm(instance=borrow)
+    return render(request, 'catalog/renew.html',{'form': form,
+        'borrow':borrow})
+
+def borrowed(request, pk):
+    borrow = get_object_or_404(Borrow, pk=pk)
+    if request.method == "POST":
+        form = BorrowedForm(request.POST, instance=borrow)
+        if form.is_valid():           
+            borrow = form.save(commit=False)
+            subject = 'Mark As Borrowed'
+            html_content = render_to_string('email/email-renew.html', {'borrow':borrow})
+            text_content = strip_tags(html_content)
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [borrow.borrower.email,]
+            msg = EmailMultiAlternatives ( subject,html_content, email_from, recipient_list )
+            msg.attach_alternative (html_content, "text/html")
+            msg.send()
+            borrow.save()
+        return redirect('account:profile')
+    else:
+        form = BorrowedForm(instance=borrow)
+    return render(request, 'catalog/borrowed.html',{'form': form,
         'borrow':borrow})
 
 class BorrowView(View):
@@ -92,10 +159,10 @@ def Reserves(request,title):
         form = ReserveForm(request.POST, request.FILES)
         if form.is_valid():
             reserve = form.save(commit=False)
-            reserve.book= book
+            reserve.book=book
             reserve.user = request.user
-            subject = 'Book Reserve'
-            html_content = render_to_string('email/email.html', {'varname':'value'})
+            subject = 'Book Reservation'
+            html_content = render_to_string('email/email-reserve.html', {'reserve':reserve})
             text_content = strip_tags(html_content)
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [reserve.user.email,]
