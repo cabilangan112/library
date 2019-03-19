@@ -19,7 +19,7 @@
   <section class="blog-content-area section-padding-0-100">
       <div class="card">
         <div class="comment-form">
-          <h1 class="headline">Registration : </h1>
+          <h1 class="headline">Registration  for Student: </h1>
           <!-- Comment Form -->
           <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
@@ -38,8 +38,8 @@
             </div>
             <div class="col-12">
               <div class="form-group">
-                <td>{{ form.middle_name.label_tag }}</td>
-                <td>{{ form.middle_name }}</td>
+                <td>{{ form.middle_initial.label_tag }}</td>
+                <td>{{ form.middle_initial }}</td>
               </div>
             </div>
             <div class="col-12">
@@ -87,6 +87,9 @@
             <div class="col-12">
             <button class="login" type="submit" class="btn btn-success btn-lg float-c enter" value="{{ next }}">Sign up</button>
             </div>
+          </br>
+
+   
           </div>
         </form>
       </div>

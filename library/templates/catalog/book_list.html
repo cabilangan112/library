@@ -23,7 +23,7 @@
           <p class="book">ISBN : {{ book.isbn }}</p>
           <p class="book">Genre : {% for genre in book.genre.all %} {{ genre }}{% if not forloop.last %}, {% endif %}{% endfor %}</p> 
           <p class="book">{{ book.summary }}</p>
-          <p class="book">Author : {{ book.author }} ({{book.author.date_of_birth}} - {{book.author.date_of_death}})</p>
+          <p class="book">Author : {{ book.author }} ({{book.author.date_of_published}})</p>
           {% for instance  in book.bookinstance_set.all %} 
             <p class="book"> Imprint : {{  instance.imprint }}</p>
 

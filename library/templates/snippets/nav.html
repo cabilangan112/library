@@ -9,10 +9,10 @@
  
  
 		{% else %}
-			<p class=navs><a class="link"  href='{% url "user:detail" user.email %}'><strong> Borrow</strong></a> |
-			<a class="link"  href='{% url "user:detail-reserve" user.email %} '><strong>Reserve</strong></a> | 
- 			<a class="link"  href='{% url "user:edit_profile" user.id %}'><strong>Edit Profile</strong> </a> |
- 			<a class="link"  href='{% url "user:edit_password" user.id_number %}'><strong>Change Credentials</strong> </a> 
+			<p class=navs><a class="link"  href='{% url "user:detail" user.email %}'><strong> Reserve List</strong></a> |
+ 
+ 			<a class="link"  href='{% url "user:edit_profile" user.id %}'><strong>Edit Profile</strong> </a> 
+ 			 
  		</p>
 
 		{% endif %}

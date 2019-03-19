@@ -17,7 +17,7 @@
 			{% if author %}
 				{% for  author in author %}
 					<div class="card">
-  					<h2 class="author"> <a  class="link" href="{% url "books:book" author.title%}" >{{ author.author }}({{author.author.date_of_birth}}-{{author.author.date_of_death}})</a></h2>
+  					<h2 class="author"> <a  class="link" href="{% url "books:book" author.title%}" >{{ author.author }}({{author.author.date_of_published}})</a></h2>
   					<p class="book">Title : <strong>{{author.title}}</strong></p>
   					<p class="book">ISBN : {{ author.isbn }}</p>
   					<p class="book">summary : {{ author.summary }}</p>

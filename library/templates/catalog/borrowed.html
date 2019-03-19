@@ -10,7 +10,7 @@
 {% include 'base.html'%}
 <body>
   <div class="card"> 
-    <h2 class="headline">Borrow Form</h2>
+    <h2 class="headline">Approval Form</h2>
     <h2 class="title">Book Title : {{borrow.book.title}}</h2>
     <p>Author <strong>: {{borrow.book.author}}</p></strong>
     <p>ISBN <strong>: {{borrow.book.isbn}}</p></strong>
@@ -21,7 +21,7 @@
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{form.as_p}}
-      <input type="submit" class="btn btn-primary" value="Borrow">
+      <input type="submit" class="btn btn-primary" value="Approve">
     </form>
   </div>
 {% endblock %}

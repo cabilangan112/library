@@ -45,8 +45,8 @@ class Genre(models.Model):
 class Book(models.Model):
     title   = models.CharField(max_length=200)
     author  = models.ForeignKey('Author', on_delete=models.SET_NULL, null=True)
-    summary = models.TextField(max_length=1000)
-    isbn    = models.CharField('ISBN', max_length=13)
+    summary = models.TextField(max_length=2000)
+    isbn    = models.CharField('ISBN', max_length=50)
     genre   = models.ManyToManyField(Genre)
  
     objects = BookManager()
@@ -69,7 +69,7 @@ class BookInstance(models.Model):
     )
 
     def __str__(self):
-        return f'{self.id} ({self.book.title})'
+        return f'{self.id}'
 
     class Meta:
         permissions = (("can_mark_returned", "Set book as returned"),)  
@@ -103,12 +103,13 @@ class Borrow(models.Model):
     book               = models.ForeignKey(Book, on_delete = models.CASCADE)
     date_of_borrowing  = models.DateTimeField(auto_now_add = True)
 
-    due_back           = models.DateField(null=True, blank=True)
+    date_returned      = models.DateField(null=True, blank=True,help_text="yyyy-mm-dd")
+    date_checkout      = models.DateField(null=True, blank=True,help_text="yyyy-mm-dd")
     date_of_renewal    = models.DateField(null=True, blank=True)
     
-    borrow             = models.BooleanField(default=True)
+    reserve             = models.BooleanField(default=True)
     returned           = models.BooleanField(default=False)
-    borrowed            = models.BooleanField(default=False)
+    approve           = models.BooleanField(default=False)
 
     class Meta:
         ordering = ['-date_of_borrowing']
@@ -121,7 +122,7 @@ class Reserve(models.Model):
     user                 = models.ForeignKey(User, on_delete = models.CASCADE)
     book                 = models.ForeignKey(Book, on_delete = models.CASCADE)
     date_of_reservation  = models.DateTimeField(auto_now_add = True)
-    due_date             = models.DateField(null=True, blank=True)
+    checkout             = models.DateField(null=True, blank=True,help_text="yyyy-mm-dd")
     
     reserve              = models.BooleanField(default=True)
     remove               = models.BooleanField(default=False)

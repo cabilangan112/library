@@ -24,18 +24,20 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <h3>Print Report - {{ today | date:"d/m/Y" }}</h3>
+        <h3>Print Report - {{ today | date:"Y/m/d" }}</h3>
       </div>
       <div class="list-group">
-        <p>Incharge: {{ request.user}}</p>
+           
+                  <strong><p>Library Incharge: <u>{{ user.last_name}} {{ user.first_name}} {{ user.middle_initial}}</u></p></strong>
+ 
       </div>
       <table class="table">
         <thead>
           <tr>
             <th>Book</th>
             <th>Author</th>
-            <th>Date Of Borrowing</th>
-            <th>Due Back</th>
+            <th>Date Of Borrowed</th>
+            <th>Date Checkout</th>
             <th>Borrower</th>
             <hr></hr>
           </tr>
@@ -47,8 +49,8 @@
             <tr>
               <td>{{ borrow.book }}</td>
               <td>{{ borrow.book.author }}</td>
-              <td>{{ borrow.date_of_borrowing | date:"d/m/Y" }}</td>
-              <td>{{ borrow.due_back | date:"d/m/Y" }}</td>
+              <td>{{ borrow.date_of_borrowing | date:"Y/m/d" }}</td>
+              <td>{{ borrow.date_checkout | date:"Y/m/d" }}</td>
               <td>{{ borrow.borrower.first_name }} {{ borrow.borrower.last_name }}</td>
             </tr>
           {% endfor %}

@@ -10,13 +10,13 @@
  	<div class="email">
  		<h2>Tile :  {{reserve.book}}</h3>
  		<h3>Author :  {{reserve.book.author}}</h3>
- 		<h3>Genre : 
+	 	<p>Due Date :{{reserve.checkout}}</p> 
+	 	 <h3>Genre : 
  		 {% for genre in reserve.book.genre.all %} 
 				{{ genre }}
 				{% if not forloop.last %}, 
 				{% endif %}
-			{% endfor %}</p>	</h3>
-	 	<p>Due Date :{{reserve.due_back}}</p> 
+		{% endfor %}</h3>
  	</div> 
 </body>
 </html>

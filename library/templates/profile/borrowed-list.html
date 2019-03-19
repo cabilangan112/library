@@ -14,15 +14,16 @@
       <input type='text' placeholder='Search..' name='q' value='{{ request.GET.q }}'>
       <button class='btn btn-default' type='submit'  >Search</button>
     </form>
+
+            <h2 class="title">Reserved List :</h2>
     {% if prof %} 
       {% for prof in prof %}
         {% for book  in prof.borrow_set.all %} 
-          {% if  book.borrow %}
-          {% if book.borrowed %}
+          {% if  book.reserve %}
+          {% if book.approve %}
             {% if not book.returned %}
             <div class="card">
                 <h2 class="author"><a  class="link" href="{% url "books:borrowed" book.id %}">{{book.book}}</a></h2>
-                <p class="book"><strong>Summary : </strong>{{ book.book.summary }}</p>
                 <p class="book">Author : {{ book.book.author }} 
                 <p class="book"><strong>Borrower : {{ book.borrower.last_name }} {{ book.borrower.first_name }}</strong>
                 <button  type="button" class="buttons btn button btn-sign-in" onclick="location.href='{% url "books:returned"   book.id%}'" >

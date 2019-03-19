@@ -14,6 +14,8 @@
     <h2 class="title">Book Title : {{reserve.book.title}}</h2>
     <p>Author <strong>: {{reserve.book.author}}</p></strong>
     <p>ISBN <strong>: {{reserve.book.isbn}}</p></strong>
+    <p>Borrower <strong>: {{reserve.user.last_name}} {{reserve.user.first_name}} {{reserve.user.middle_initial}}</p></strong>
+    <p>Checkout : {{reserve.checkout}}</p>
  
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}

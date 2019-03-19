@@ -13,8 +13,9 @@ YEAR = (
     ('1st', 'Firs Year'),
     ('2nd', 'Second Year'),
     ('3rd', 'Third Year'),
-    ('4rt', 'Fourth Year'),
-    ('Personal', 'Personal'),
+    ('4th', 'Fourth Year'),
+    ('5th', 'Fifth Year'),
+    ('Personnel', 'Personnel'),
 )
 class Course(models.Model):
     course_code        = models.CharField(max_length=100)
@@ -47,9 +48,9 @@ class User(AbstractBaseUser):
     id_number    = models.CharField(max_length=80)
     first_name   = models.CharField(max_length=80)
     last_name    = models.CharField(max_length=80)
-    middle_name    = models.CharField(max_length=80)
+    middle_initial    = models.CharField(max_length=80)
     course       = models.ForeignKey(Course, null=True, blank=True, on_delete = models.CASCADE)
-    Year         = models.CharField(max_length=6, choices=YEAR, blank=True, default=True)
+    Year         = models.CharField(max_length=30, choices=YEAR, blank=True, default=True)
     department   = models.ForeignKey(Department, null=True, blank=True, on_delete = models.CASCADE)
 
     is_staff 	 = models.BooleanField(default=False)

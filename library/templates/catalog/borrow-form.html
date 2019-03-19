@@ -10,7 +10,7 @@
 {% include 'base.html'%}
 <body>
   <div class="card"> 
-    <h2 class="headline">Book Borrowing</h2>
+    <h2 class="headline">Book Reservation</h2>
     {% if user.is_authenticated %}
       <h2 class="title">Borrower : {{user.last_name}} {{user.first_name}}</h2>
     {% endif %}
@@ -24,7 +24,7 @@
     <form method="post" enctype="multipart/form-data">
       {% csrf_token %}
       {{form.as_p}}
-      <input type="submit" class="btn btn-primary" value="Borrow">
+      <input type="submit" class="btn btn-primary" value="Reserve">
     </form>
   </div>
 {% endblock %}

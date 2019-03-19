@@ -11,7 +11,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from account.models import User
 from .models import Borrow,Book, Author, BookInstance, Genre, Reserve
-from .forms import RenewBookModelForm,ReturnForm,BorrowedForm,RemoveForm,RenewForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
+from .forms import RenewBookModelForm,ReturnForm,BorrowedForm,RemoveForm,ReservedForm,RenewForm,BookModelForm,AuthorModelForm,GenreModelForm,BorrowForm,ReserveForm
 from django.views.generic.base import TemplateView,View
 from account.decorators import user_required,staff_required
 from django.core.mail import EmailMultiAlternatives
@@ -34,8 +34,10 @@ class Pdf(View):
     def get(self, request):
         borrow = Borrow.objects.all()
         today = timezone.now()
+        user  = request.user
         params = {
             'today': today,
+            'user':user,
             'borrow': borrow,
              
         }
@@ -128,7 +130,7 @@ def borrowed(request, pk):
         form = BorrowedForm(request.POST, instance=borrow)
         if form.is_valid():           
             borrow = form.save(commit=False)
-            subject = 'Mark As Borrowed'
+            subject = 'The book that you reserve has been approved'
             html_content = render_to_string('email/email-renew.html', {'borrow':borrow})
             text_content = strip_tags(html_content)
             email_from = settings.EMAIL_HOST_USER
@@ -177,6 +179,8 @@ def Reserves(request,title):
                 'book':book
                 }
     return render(request, 'reserve-form.html', context)
+
+
 
 def RemoveView(request, pk):
     reserve = get_object_or_404(Reserve, pk=pk)
@@ -392,3 +396,4 @@ def Genre_edit(request,name):
     else:
         form = BookModelForm(instance=post)
     return render(request, 'edit-genre.html', {'form': form})
+

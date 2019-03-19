@@ -1,8 +1,9 @@
  .bton  button{
   margin-top: 30px;
-  text-align: center;
-  width: 200px;
-
+  float:  left;
+  margin-left: 200px;
+  margin-right: -190px;
+  width: 195px;
 
  }
 .card{
@@ -106,6 +107,7 @@ input[type=password], select, textarea {
  }
  .bton{
   text-align: center;
+
  }
  .card .form-group{
    padding: 0px;

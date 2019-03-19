@@ -30,3 +30,5 @@ admin.site.register(Genre)
 admin.site.register(Borrow)
 admin.site.register(Reserve)
 admin.site.register(BookInstance,BookInstanceAdmin)
+
+admin.site.site_header = 'Admin Panel'

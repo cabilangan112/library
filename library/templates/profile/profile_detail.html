@@ -21,7 +21,7 @@
     </div>
         {% for book in user.borrow_set.all %}
           {% if not book.returned %}
-          {% if book.borrow %}
+          {% if book.reserve %}
           <div class="card">
             <h2 class="author"><a  class="link" href=" ">{{ book.book.title }}</a></h2>
             <p class="book">ISBN : {{ book.book.isbn }}</p>

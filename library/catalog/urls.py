@@ -35,10 +35,6 @@ urlpatterns = [
     path('genre/create/', views.GenreCreateView.as_view(), name='genre-create'),
     path('genre/<name>', views.GenreDetailView.as_view(), name='genre'),
 #Borrow
-
     path('borrow/<title>', views.borrow, name='borrow'),
- 
     path('reserve/<title>', views.Reserves, name='reserve'),
-
- 
 ]

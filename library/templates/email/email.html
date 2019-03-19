@@ -6,7 +6,7 @@
 	<link href="{% static 'css/email.css' %}" rel="stylesheet">
 </head>
 <body>
-	<h1>Book Borrowing</h1>
+	<h1>Book Reservation</h1>
  	<div class="email">
  		<h2>Tile :  {{borrow.book}}</h3>
  		<h3>Author :  {{borrow.book.author}}</h3>
@@ -16,7 +16,7 @@
 				{% if not forloop.last %}, 
 				{% endif %}
 			{% endfor %}</p>	</h3>
-	 	<p>Due Date :{{borrow.due_back}}</p>
+	 	<p>Due Date :{{borrow.date_returned}}</p>
  	</div> 
 </body>
 </html>

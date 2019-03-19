@@ -11,13 +11,7 @@
 <body>
 
 {% block content %}
-{% if form.errors %}
-  <div class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert">
-  {% for field in form %}
-    {{ field.errors }}
-  {% endfor %}
-  </div>
-{% endif %}
+
 <div class="card"> 
  
               <h2 class="headline">Login</h2>
@@ -35,6 +29,13 @@
                       <td>{{ form.password.label_tag }}</td>
                       <td>{{ form.password }}</td>
                     </div>
+                    {% if form.errors %}
+  <div style="margin-right: 30px;" class="error_message col-md-12 offset-md-0 alert alert-danger" role="alert" >
+{% if form.errors %}
+<p>Email Address and Password didn't match</p>
+{% endif %}
+  </div>
+{% endif %}
                   </div>
                   <div class="col-12">
                     <input type="submit" value="Login" class="btn foode-btn"/>
@@ -42,11 +43,17 @@
                   </div>
                 </div>
               </form> 
-              <div class="bton">
-                            <button type="button" class="button" onclick="location.href='{% url "register" %}'" >
-                <span>Sign up</span>
+          <div class="bton">
+                        <button type="button" class="button" onclick="location.href='{% url "register" %}'" >
+            <span>Sign as Student</span>
+          </button>
+          </div>
+                          <div class="bton">
+                            <button type="button" class="button" onclick="location.href='{% url "register-personnel" %}'" >
+                <span>Sign up as Personnel</span>
               </button>
             </div>
+
    
  
 </div>

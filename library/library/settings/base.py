@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'w+9xwd*7_79*_456z&k8i!u@b4(9a30^y!5%%=e(jyrl^s7zz0'
-ALLOWED_HOSTS = ['127.0.0.1','ndmc-library.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -30,7 +30,7 @@ EMAIL_HOST_PASSWORD = 'notredame1941'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-DEFAULT_FROM_EMAIL = 'Jassen <ndmclibrary1941@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Ejay <ndmclibrary1941@gmail.com>'
 ADMINS = (
     ('You', 'ndmclibrary1941@gmail.com'),
 )
@@ -39,8 +39,7 @@ MANAGERS = ADMINS
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ 
 
 # Application definition
 
